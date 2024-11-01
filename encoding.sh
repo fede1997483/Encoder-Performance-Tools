@@ -25,7 +25,6 @@ codecs_=$(echo "$CODECS" | tr ' ' '_')
 width=$3
 height=$4
 fps=$5
-hevc_preset="$HEVC_PRESET"
 vvc_preset="$VVC_PRESET"
 vvc_enc_mode=$VVC_ENCODING_MODE
 

@@ -21,6 +21,7 @@ s="-s ${width}x${height}"
 r="-r "$fps"" 
 hevc_preset="$HEVC_PRESET"
 vvc_preset="$VVC_PRESET"
+av1_preset="$AV1_PRESET"
 vvc_enc_mode=$VVC_ENCODING_MODE
 ffmpeg_vvc_prmts=$FFMPEG_VVC_PARAMETERS
 vvenc_prmts=$VVENC_PARAMETERS
@@ -62,6 +63,12 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
      ffmpeg -i ${path_to_results}output_${rate}k.266 -pix_fmt ${PIX_FMT_FOR_ENC_DEC}\
       ${path_to_results}output_decoded_VVC_${rate}k.${file_extension} -loglevel error
     fi
+    if [ $codec = "AV1" ]; then
+     time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -preset ${av1_preset} -b:v ${rate}k -f ivf ${path_to_results}output_${rate}k.ivf  2>>\
+      ${path_to_results}execution_times_${rate}k.txt 
+     ffmpeg -i ${path_to_results}output_${rate}k.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} \
+      ${path_to_results}output_decoded_AV1_${rate}k.${file_extension} -loglevel error
+    fi
   }
   done
 fi
@@ -81,6 +88,12 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
     ${path_to_results}execution_times.txt 
     ffmpeg -i ${path_to_results}output.266 -pix_fmt ${PIX_FMT_FOR_ENC_DEC}\
     ${path_to_results}output_decoded_VVC.${file_extension} -loglevel error
+  fi
+  if [ $codec = "AV1" ]; then
+    time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -preset ${av1_preset} -f ivf ${path_to_results}output.ivf 2>> \
+    ${path_to_results}execution_times.txt 
+    ffmpeg -i ${path_to_results}output.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} \
+    ${path_to_results}output_decoded_AV1.${file_extension} -loglevel error
   fi
 fi
 
