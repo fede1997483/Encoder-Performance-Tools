@@ -10,8 +10,6 @@ file_name = sys.argv[3]
 file_name_no_ext = os.path.splitext(file_name)[0]
 vvc_preset = sys.argv[4]
 vvc_enc_mode = sys.argv[5]
-#path_to_results = '../results_' + file_name_no_ext + '_' + vvc_preset + '_' + vvc_enc_mode \
-#    + '_'+ sys.argv[1].replace(' ','_') + '_' + sys.argv[2].replace(' ', '_') + '_kbs'
 path_to_results = '../' + sys.argv[6] 
 
 file_paths = {
