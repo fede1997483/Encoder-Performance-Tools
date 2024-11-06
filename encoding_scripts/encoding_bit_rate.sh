@@ -28,7 +28,6 @@ vvenc_prmts=$VVENC_PARAMETERS
 ffmpeg_hevc_prmts=$FFMPEG_HEVC_PARAMETERS
 hevc_prmts=$HEVC_PARAMETERS
 
-
 path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
 
 if [ "${file_extension}" = "y4m" ]; then
@@ -64,7 +63,7 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
       ${path_to_results}output_decoded_VVC_${rate}k.${file_extension} -loglevel error
     fi
     if [ $codec = "AV1" ]; then
-     time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -preset ${av1_preset} -b:v ${rate}k -f ivf ${path_to_results}output_${rate}k.ivf  2>>\
+     time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -cpu-used ${av1_preset} -b:v ${rate}k -f ivf ${path_to_results}output_${rate}k.ivf  2>>\
       ${path_to_results}execution_times_${rate}k.txt 
      ffmpeg -i ${path_to_results}output_${rate}k.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} \
       ${path_to_results}output_decoded_AV1_${rate}k.${file_extension} -loglevel error
@@ -90,7 +89,7 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
     ${path_to_results}output_decoded_VVC.${file_extension} -loglevel error
   fi
   if [ $codec = "AV1" ]; then
-    time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -preset ${av1_preset} -f ivf ${path_to_results}output.ivf 2>> \
+    time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -cpu-used ${av1_preset} -f ivf ${path_to_results}output.ivf 2>> \
     ${path_to_results}execution_times.txt 
     ffmpeg -i ${path_to_results}output.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} \
     ${path_to_results}output_decoded_AV1.${file_extension} -loglevel error

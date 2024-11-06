@@ -57,11 +57,11 @@ plt.figure(figsize=(6, 4))
 bitrate_values = bit_rates
 
 if 'HEVC' in codecs:
-    plt.plot(bitrate_values, list(average_psnr_per_bitrate['HEVC'].values()), 'o-', label='PSNR HEVC')
+    plt.plot(bitrate_values, list(average_psnr_per_bitrate['HEVC'].values()), 'o-', label='PSNR HEVC', color='blue')
 if 'VVC' in codecs:
-    plt.plot(bitrate_values, list(average_psnr_per_bitrate['VVC'].values()), 'o--', label='PSNR VVC')
+    plt.plot(bitrate_values, list(average_psnr_per_bitrate['VVC'].values()), 'o--', label='PSNR VVC', color='red')
 if 'AV1' in codecs:
-    plt.plot(bitrate_values, list(average_psnr_per_bitrate['AV1'].values()), 'o-.', label='PSNR AV1')
+    plt.plot(bitrate_values, list(average_psnr_per_bitrate['AV1'].values()), 'o-.', label='PSNR AV1', color='green')
 
 plt.xlabel('Bitrate (kbps)')
 plt.ylabel('PSNR_Y')
