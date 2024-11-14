@@ -18,10 +18,8 @@ vvc_preset=$VVC_PRESET
 vvc_enc_mode=$VVC_ENCODING_MODE
 output_csv="./results_${file_name_no_ext}_${file_config_name_no_ext}.csv"
 
-# Initialize CSV file with headers
-echo "seq_name,fps,duration,w,h,bitrate,codec,preset,enc_duration,vmaf,psnr_y,float_ssim" > $output_csv
+echo "seq_name,fps,duration,w,h,bitrate,codec,preset,vmaf,psnr_y,float_ssim,real,user,sys" > $output_csv
 
-# Function to extract metadata from .y4m file
 extract_y4m_metadata() {
   fps=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of csv=p=0 "$file_name" | bc -l)
   width=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$file_name")
@@ -29,7 +27,6 @@ extract_y4m_metadata() {
   duration=$(ffprobe -v error -select_streams v:0 -show_entries format=duration -of csv=p=0 "$file_name")
 }
 
-# Set encoding parameters
 if [ "$file_extension" = "y4m" ]; then
   pix_fmt=""
   bit_depth=""
@@ -47,7 +44,6 @@ fi
 
 path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
 
-# Function to calculate average metrics from JSON file
 calculate_averages() {
   json_file=$1
   vmaf_avg=$(jq '[.frames[].metrics.vmaf] | add / length' "$json_file")
@@ -56,34 +52,54 @@ calculate_averages() {
   echo "$vmaf_avg,$psnr_y_avg,$float_ssim_avg"
 }
 
-# Encoding process for CBR mode
+extract_info_from_log() {
+  log_file=$1
+  real_time=$(grep "elapsed" "$log_file" | awk '{print $3}' | sed 's/elapsed//')
+  user_time=$(grep "user" "$log_file" | awk '{print $1}' | sed 's/user//')
+  sys_time=$(grep "sys" "$log_file" | awk '{print $2}' | sed 's/system//')
+
+  case $codec in
+    "AV1")
+      codec_library="libaom-av1"
+      ;;
+    "VVC")
+      codec_library="libvvenc"
+      ;;
+    "HEVC")
+      codec_library="libx265"
+      ;;
+  esac
+
+  echo "$real_time,$user_time,$sys_time,$codec_library"
+}
+
 if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
   for codec in $CODECS; do
     path_to_results="${path_to_results_base}$codec/"
     for rate in $BIT_RATES; do
         echo "_________________________________"
         echo "$codec (bit rate: $rate kbit/s)"
-        ./vmaf --reference "$file_name" --distorted ${path_to_results}output_decoded_${codec}_${rate}k.${file_extension} \
+        
+        enc_info=$(extract_info_from_log "${path_to_results}execution_times_${rate}k.txt")
+        real_time=$(echo $enc_info | cut -d',' -f1)
+        user_time=$(echo $enc_info | cut -d',' -f2)
+        sys_time=$(echo $enc_info | cut -d',' -f3)
+        codec_library=$(echo $enc_info | cut -d',' -f4)
+
+        ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
           $width $height $pix_fmt $bit_depth \
-          --model version=vmaf_float_v0.6.1 -o ${path_to_results}results_${codec}_${rate}k.json \
+          --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}_${rate}k.json" \
           --json --feature psnr --feature float_ssim
         echo "_________________________________"
         
-        # Set enc_duration to zero
-        enc_duration=0
-        
-        # Extract metadata only before writing to CSV
         if [ "$file_extension" = "y4m" ]; then
           extract_y4m_metadata
         fi
 
-        # Calculate average metrics
         metrics=$(calculate_averages "${path_to_results}results_${codec}_${rate}k.json")
         
-        # Write row to CSV
-        echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec,$vvc_preset,$enc_duration,$metrics" >> $output_csv
+        echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$vvc_preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
 
-        # Reset values to empty
         fps=""
         duration=""
         width=""
@@ -92,34 +108,33 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
   done
 fi
 
-# Encoding process for VBR mode
 if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
   for codec in $CODECS; do
     path_to_results="${path_to_results_base}$codec/"
     
     echo "_________________________________"
-    echo "$codec (bit rate: $rate kbit/s)"
-    ./vmaf --reference "$file_name" --distorted ${path_to_results}output_decoded_${codec}.${file_extension} \
+    echo "$codec (VBR)"
+    
+    enc_info=$(extract_info_from_log "${path_to_results}execution_times.txt")
+    real_time=$(echo $enc_info | cut -d',' -f1)
+    user_time=$(echo $enc_info | cut -d',' -f2)
+    sys_time=$(echo $enc_info | cut -d',' -f3)
+    codec_library=$(echo $enc_info | cut -d',' -f4)
+
+    ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}.${file_extension}" \
       $width $height $pix_fmt $bit_depth \
-      --model version=vmaf_float_v0.6.1 -o ${path_to_results}results_${codec}.json \
+      --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}.json" \
       --json --feature psnr --feature float_ssim
     echo "_________________________________"
     
-    # Set enc_duration to zero
-    enc_duration=0
-    
-    # Extract metadata only before writing to CSV
     if [ "$file_extension" = "y4m" ]; then
       extract_y4m_metadata
     fi
 
-    # Calculate average metrics
     metrics=$(calculate_averages "${path_to_results}results_${codec}.json")
     
-    # Write row to CSV
-    echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec,$vvc_preset,$enc_duration,$metrics" >> $output_csv
+    echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec_library,$vvc_preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
 
-    # Reset values to empty
     fps=""
     duration=""
     width=""
