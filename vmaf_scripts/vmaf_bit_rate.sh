@@ -14,8 +14,6 @@ codecs_=$(echo "$CODECS" | tr ' ' '_')
 file_extension="${file_name##*.}"
 pix_fmt="-p ${PIX_FMT_FOR_VMAF}"
 bit_depth="-b ${BIT_DEPTH_FOR_VMAF}"
-vvc_preset=$VVC_PRESET
-vvc_enc_mode=$VVC_ENCODING_MODE
 output_csv="./results_${file_name_no_ext}_${file_config_name_no_ext}.csv"
 
 echo "seq_name,fps,duration,w,h,bitrate,codec,preset,vmaf,psnr_y,float_ssim,real,user,sys" > $output_csv
@@ -25,6 +23,23 @@ extract_y4m_metadata() {
   width=$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$file_name")
   height=$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$file_name")
   duration=$(ffprobe -v error -select_streams v:0 -show_entries format=duration -of csv=p=0 "$file_name")
+}
+
+get_preset_for_codec() {
+  case $1 in
+    "AV1")
+      echo "$AV1_PRESET"
+      ;;
+    "VVC")
+      echo "$VVC_PRESET"
+      ;;
+    "HEVC")
+      echo "$HEVC_PRESET"
+      ;;
+    *)
+      echo "Unknown"
+      ;;
+  esac
 }
 
 if [ "$file_extension" = "y4m" ]; then
@@ -86,6 +101,8 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
         sys_time=$(echo $enc_info | cut -d',' -f3)
         codec_library=$(echo $enc_info | cut -d',' -f4)
 
+        preset=$(get_preset_for_codec "$codec")
+
         ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
           $width $height $pix_fmt $bit_depth \
           --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}_${rate}k.json" \
@@ -98,7 +115,7 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
 
         metrics=$(calculate_averages "${path_to_results}results_${codec}_${rate}k.json")
         
-        echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$vvc_preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
+        echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
 
         fps=""
         duration=""
@@ -121,6 +138,8 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
     sys_time=$(echo $enc_info | cut -d',' -f3)
     codec_library=$(echo $enc_info | cut -d',' -f4)
 
+    preset=$(get_preset_for_codec "$codec")
+
     ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}.${file_extension}" \
       $width $height $pix_fmt $bit_depth \
       --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}.json" \
@@ -133,7 +152,7 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
 
     metrics=$(calculate_averages "${path_to_results}results_${codec}.json")
     
-    echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec_library,$vvc_preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
+    echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
 
     fps=""
     duration=""
