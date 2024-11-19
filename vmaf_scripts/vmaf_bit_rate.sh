@@ -16,7 +16,7 @@ pix_fmt="-p ${PIX_FMT_FOR_VMAF}"
 bit_depth="-b ${BIT_DEPTH_FOR_VMAF}"
 output_csv="./results_${file_name_no_ext}_${file_config_name_no_ext}.csv"
 
-echo "seq_name,fps,duration,w,h,bitrate,codec,preset,vmaf,psnr_y,float_ssim,real,user,sys" > $output_csv
+echo "seq_name,fps,duration,w,h,bitrate,codec,preset,vmaf,psnr_y,float_ssim,real,user,sys,actual_bitrate" > $output_csv
 
 extract_y4m_metadata() {
   fps=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of csv=p=0 "$file_name" | bc -l)
@@ -42,29 +42,11 @@ get_preset_for_codec() {
   esac
 }
 
-if [ "$file_extension" = "y4m" ]; then
-  pix_fmt=""
-  bit_depth=""
-  fps=""
-  duration=""
-  width=""
-  height=""
-else
-  width="-w $3"
-  height="-h $4"
-  pix_fmt="-p ${PIX_FMT_FOR_VMAF}"
-  bit_depth="-b ${BIT_DEPTH_FOR_VMAF}"
-  duration="N/A"
-fi
-
-path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
-
-calculate_averages() {
-  json_file=$1
-  vmaf_avg=$(jq '[.frames[].metrics.vmaf] | add / length' "$json_file")
-  psnr_y_avg=$(jq '[.frames[].metrics.psnr_y] | add / length' "$json_file")
-  float_ssim_avg=$(jq '[.frames[].metrics.float_ssim] | add / length' "$json_file")
-  echo "$vmaf_avg,$psnr_y_avg,$float_ssim_avg"
+calculate_actual_bitrate() {
+  file=$1
+  duration=$2
+  file_size=$(stat -c%s "$file")
+  echo "scale=2; ($file_size * 8) / ($duration * 1000)" | bc -l
 }
 
 extract_info_from_log() {
@@ -88,6 +70,31 @@ extract_info_from_log() {
   echo "$real_time,$user_time,$sys_time,$codec_library"
 }
 
+calculate_averages() {
+  json_file=$1
+  vmaf_avg=$(jq '[.frames[].metrics.vmaf] | add / length' "$json_file")
+  psnr_y_avg=$(jq '[.frames[].metrics.psnr_y] | add / length' "$json_file")
+  float_ssim_avg=$(jq '[.frames[].metrics.float_ssim] | add / length' "$json_file")
+  echo "$vmaf_avg,$psnr_y_avg,$float_ssim_avg"
+}
+
+if [ "$file_extension" = "y4m" ]; then
+  pix_fmt=""
+  bit_depth=""
+  fps=""
+  duration=""
+  width=""
+  height=""
+else
+  width="-w $3"
+  height="-h $4"
+  pix_fmt="-p ${PIX_FMT_FOR_VMAF}"
+  bit_depth="-b ${BIT_DEPTH_FOR_VMAF}"
+  duration="N/A"
+fi
+
+path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
+
 if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
   for codec in $CODECS; do
     path_to_results="${path_to_results_base}$codec/"
@@ -103,6 +110,20 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
 
         preset=$(get_preset_for_codec "$codec")
 
+        case $codec in
+          "AV1")
+            compressed_file="${path_to_results}output_${rate}k.ivf"
+            ;;
+          "VVC")
+            compressed_file="${path_to_results}output_${rate}k.266"
+            ;;
+          "HEVC")
+            compressed_file="${path_to_results}output_${rate}k.h265"
+            ;;
+        esac
+
+  
+
         ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
           $width $height $pix_fmt $bit_depth \
           --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}_${rate}k.json" \
@@ -113,9 +134,10 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
           extract_y4m_metadata
         fi
 
+        actual_bitrate=$(calculate_actual_bitrate "${compressed_file}" "${duration}")
         metrics=$(calculate_averages "${path_to_results}results_${codec}_${rate}k.json")
         
-        echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
+        echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time,$actual_bitrate" >> $output_csv
 
         fps=""
         duration=""
@@ -140,7 +162,19 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
 
     preset=$(get_preset_for_codec "$codec")
 
-    ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}.${file_extension}" \
+    case $codec in
+      "AV1")
+        compressed_file="${path_to_results}output.ivf"
+        ;;
+      "VVC")
+        compressed_file="${path_to_results}output.266"
+        ;;
+      "HEVC")
+        compressed_file="${path_to_results}output.h265"
+        ;;
+    esac
+
+    ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
       $width $height $pix_fmt $bit_depth \
       --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}.json" \
       --json --feature psnr --feature float_ssim
@@ -150,9 +184,10 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
       extract_y4m_metadata
     fi
 
+    actual_bitrate=$(calculate_actual_bitrate "${compressed_file}" "${duration}")
     metrics=$(calculate_averages "${path_to_results}results_${codec}.json")
     
-    echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time" >> $output_csv
+    echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time,$actual_bitrate" >> $output_csv
 
     fps=""
     duration=""

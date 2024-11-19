@@ -33,13 +33,12 @@ if [ "${ENCODE}" = "on" ]; then
   rm -rf ${path_to_results}
   mkdir -m 755 -p ${path_to_results}
   cp ${file_config} ${path_to_results}
-
-  for codec in $CODECS; do
-      echo "Processing file: ${file_name_ext} (codec: $codec)"
-      sh ./encoding_scripts/encoding_bit_rate.sh $file_name $file_config $codec $width $height $fps
-      echo "Encoding finished ($codec)."
-  done
 fi
+for codec in $CODECS; do
+    echo "Processing file: ${file_name_ext} (codec: $codec)"
+    sh ./encoding_scripts/encoding_bit_rate.sh $file_name $file_config $codec $width $height $fps
+    echo "Encoding finished ($codec)."
+done
 
 if [ "${EVALUATE}" = "on" ]; then
   chmod +x ./vmaf
