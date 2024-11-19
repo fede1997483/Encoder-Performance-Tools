@@ -59,17 +59,17 @@ if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
     if [ $codec = "HEVC" ]; then
       { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libx265 -preset ${ffmpeg_hevc_prmts} ${hevc_preset} -b:v ${rate}k -threads 4 ${hevc_prmts} -f hevc ${path_to_results}output_${rate}k.h265 ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       ffmpeg -i ${path_to_results}output_${rate}k.h265 -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_HEVC_${rate}k.${file_extension} -loglevel error
-      extract_and_display_time "${path_to_results}execution_times_${rate}k.txt"
+      #extract_and_display_time "${path_to_results}execution_times_${rate}k.txt"
     fi
     if [ $codec = "VVC" ]; then
       { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libvvenc ${ffmpeg_vvc_prmts} -preset ${vvc_preset} -b:v ${rate}k -threads 4 ${vvenc_prmts} -f rawvideo ${path_to_results}output_${rate}k.266 ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       ffmpeg -i ${path_to_results}output_${rate}k.266 -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_VVC_${rate}k.${file_extension} -loglevel error
-      extract_and_display_time "${path_to_results}execution_times_${rate}k.txt"
+      #extract_and_display_time "${path_to_results}execution_times_${rate}k.txt"
     fi
     if [ $codec = "AV1" ]; then
       { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -cpu-used ${av1_preset} -b:v ${rate}k -threads 4 -f ivf ${path_to_results}output_${rate}k.ivf ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       ffmpeg -i ${path_to_results}output_${rate}k.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_AV1_${rate}k.${file_extension} -loglevel error
-      extract_and_display_time "${path_to_results}execution_times_${rate}k.txt"
+      #extract_and_display_time "${path_to_results}execution_times_${rate}k.txt"
     fi
   done
 fi

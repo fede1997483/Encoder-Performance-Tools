@@ -29,23 +29,27 @@ vvc_preset="$VVC_PRESET"
 vvc_enc_mode=$VVC_ENCODING_MODE
 
 path_to_results="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
-rm -rf ${path_to_results}
-mkdir -m 755 -p ${path_to_results}
-cp ${file_config} ${path_to_results}
+if [ "${ENCODE}" = "on" ]; then
+  rm -rf ${path_to_results}
+  mkdir -m 755 -p ${path_to_results}
+  cp ${file_config} ${path_to_results}
 
-for codec in $CODECS; do
-    echo "Processing file: ${file_name_ext} (codec: $codec)"
-    sh ./encoding_scripts/encoding_bit_rate.sh $file_name $file_config $codec $width $height $fps
-    echo "Encoding finished ($codec)."
-done
+  for codec in $CODECS; do
+      echo "Processing file: ${file_name_ext} (codec: $codec)"
+      sh ./encoding_scripts/encoding_bit_rate.sh $file_name $file_config $codec $width $height $fps
+      echo "Encoding finished ($codec)."
+  done
+fi
 
-chmod +x ./vmaf
-sh ./vmaf_scripts/vmaf_bit_rate.sh $file_name $file_config $codec $width $height $fps
+if [ "${EVALUATE}" = "on" ]; then
+  chmod +x ./vmaf
+  sh ./vmaf_scripts/vmaf_bit_rate.sh $file_name $file_config $codec $width $height $fps
 
-if [ "${vvc_enc_mode}" = "CBR" ]; then
-  mkdir -m 755 -p "${path_to_results}graphs"
-  cd ./python_scripts/
-  python3 vmaf.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
-  python3 psnr.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
-  cd ..
+  if [ "${vvc_enc_mode}" = "CBR" ]; then
+    mkdir -m 755 -p "${path_to_results}graphs"
+    cd ./python_scripts/
+    python3 vmaf.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
+    python3 psnr.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
+    cd ..
+  fi
 fi
