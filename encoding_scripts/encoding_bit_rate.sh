@@ -44,7 +44,7 @@ if [ "${hevc_prmts}" != "" ]; then
   hevc_prmts="-x265-params "${hevc_prmts}""
 fi
 
-if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
+if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
   path_to_results="${path_to_results_base}$codec/"
   mkdir -m 755 -p ${path_to_results}
   for rate in $BIT_RATES; do

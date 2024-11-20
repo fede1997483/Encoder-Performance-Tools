@@ -95,7 +95,7 @@ fi
 
 path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
 
-if [ ${VVC_ENCODING_MODE} = "CBR" ]; then
+if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
   for codec in $CODECS; do
     path_to_results="${path_to_results_base}$codec/"
     for rate in $BIT_RATES; do
