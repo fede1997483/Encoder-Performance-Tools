@@ -94,10 +94,15 @@ else
 fi
 
 path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
+actual_bitrate_file="${path_to_results_base}actual_bitrate.txt"
+
+mkdir -p "$path_to_results_base" 
+echo "codec,rate,actual_bitrate" > "$actual_bitrate_file"
 
 if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
   for codec in $CODECS; do
     path_to_results="${path_to_results_base}$codec/"
+    mkdir -p "$path_to_results"
     for rate in $BIT_RATES; do
         echo "_________________________________"
         echo "$codec (bit rate: $rate kbit/s)"
@@ -122,8 +127,6 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
             ;;
         esac
 
-  
-
         ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
           $width $height $pix_fmt $bit_depth \
           --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}_${rate}k.json" \
@@ -137,6 +140,9 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
         actual_bitrate=$(calculate_actual_bitrate "${compressed_file}" "${duration}")
         metrics=$(calculate_averages "${path_to_results}results_${codec}_${rate}k.json")
         
+        # Salva il valore di actual_bitrate
+        echo "$codec,$rate,$actual_bitrate" >> "$actual_bitrate_file"
+
         echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time,$actual_bitrate" >> $output_csv
 
         fps=""
@@ -150,6 +156,7 @@ fi
 if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
   for codec in $CODECS; do
     path_to_results="${path_to_results_base}$codec/"
+    mkdir -p "$path_to_results" 
     
     echo "_________________________________"
     echo "$codec (VBR)"
@@ -187,6 +194,8 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
     actual_bitrate=$(calculate_actual_bitrate "${compressed_file}" "${duration}")
     metrics=$(calculate_averages "${path_to_results}results_${codec}.json")
     
+    echo "$codec,N/A,$actual_bitrate" >> "$actual_bitrate_file"
+
     echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time,$actual_bitrate" >> $output_csv
 
     fps=""
