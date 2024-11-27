@@ -31,10 +31,28 @@ get_preset_for_codec() {
       echo "$AV1_PRESET"
       ;;
     "VVC")
-      echo "$VVC_PRESET"
+      case $VVC_PRESET in
+        "faster") echo "5" ;;
+        "fast") echo "4" ;;
+        "medium") echo "3" ;;
+        "slow") echo "2" ;;
+        "slower") echo "1" ;;
+        *) echo "Unknown" ;;
+      esac
       ;;
     "HEVC")
-      echo "$HEVC_PRESET"
+      case $HEVC_PRESET in
+        "ultrafast") echo "8" ;;
+        "superfast") echo "7" ;;
+        "veryfast") echo "6" ;;
+        "faster") echo "5" ;;
+        "fast") echo "4" ;;
+        "medium") echo "3" ;;
+        "slow") echo "2" ;;
+        "veryslow") echo "1" ;;
+        "placebo") echo "0" ;;
+        *) echo "Unknown" ;;
+      esac
       ;;
     *)
       echo "Unknown"
@@ -96,7 +114,7 @@ fi
 path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
 actual_bitrate_file="${path_to_results_base}actual_bitrate.txt"
 
-mkdir -p "$path_to_results_base" 
+mkdir -p "$path_to_results_base"
 echo "codec,rate,actual_bitrate" > "$actual_bitrate_file"
 
 if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
@@ -104,103 +122,50 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
     path_to_results="${path_to_results_base}$codec/"
     mkdir -p "$path_to_results"
     for rate in $BIT_RATES; do
-        echo "_________________________________"
-        echo "$codec (bit rate: $rate kbit/s)"
-        
-        enc_info=$(extract_info_from_log "${path_to_results}execution_times_${rate}k.txt")
-        real_time=$(echo $enc_info | cut -d',' -f1)
-        user_time=$(echo $enc_info | cut -d',' -f2)
-        sys_time=$(echo $enc_info | cut -d',' -f3)
-        codec_library=$(echo $enc_info | cut -d',' -f4)
+      echo "_________________________________"
+      echo "$codec (bit rate: $rate kbit/s)"
+      
+      enc_info=$(extract_info_from_log "${path_to_results}execution_times_${rate}k.txt")
+      real_time=$(echo $enc_info | cut -d',' -f1)
+      user_time=$(echo $enc_info | cut -d',' -f2)
+      sys_time=$(echo $enc_info | cut -d',' -f3)
+      codec_library=$(echo $enc_info | cut -d',' -f4)
 
-        preset=$(get_preset_for_codec "$codec")
+      preset=$(get_preset_for_codec "$codec")
 
-        case $codec in
-          "AV1")
-            compressed_file="${path_to_results}output_${rate}k.ivf"
-            ;;
-          "VVC")
-            compressed_file="${path_to_results}output_${rate}k.266"
-            ;;
-          "HEVC")
-            compressed_file="${path_to_results}output_${rate}k.h265"
-            ;;
-        esac
+      case $codec in
+        "AV1")
+          compressed_file="${path_to_results}output_${rate}k.ivf"
+          ;;
+        "VVC")
+          compressed_file="${path_to_results}output_${rate}k.266"
+          ;;
+        "HEVC")
+          compressed_file="${path_to_results}output_${rate}k.h265"
+          ;;
+      esac
 
-        ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
-          $width $height $pix_fmt $bit_depth \
-          --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}_${rate}k.json" \
-          --json --feature psnr --feature float_ssim
-        echo "_________________________________"
-        
-        if [ "$file_extension" = "y4m" ]; then
-          extract_y4m_metadata
-        fi
+      ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
+        $width $height $pix_fmt $bit_depth \
+        --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}_${rate}k.json" \
+        --json --feature psnr --feature float_ssim
+      echo "_________________________________"
+      
+      if [ "$file_extension" = "y4m" ]; then
+        extract_y4m_metadata
+      fi
 
-        actual_bitrate=$(calculate_actual_bitrate "${compressed_file}" "${duration}")
-        metrics=$(calculate_averages "${path_to_results}results_${codec}_${rate}k.json")
-        
-        # Salva il valore di actual_bitrate
-        echo "$codec,$rate,$actual_bitrate" >> "$actual_bitrate_file"
+      actual_bitrate=$(calculate_actual_bitrate "${compressed_file}" "${duration}")
+      metrics=$(calculate_averages "${path_to_results}results_${codec}_${rate}k.json")
+      
+      echo "$codec,$rate,$actual_bitrate" >> "$actual_bitrate_file"
 
-        echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time,$actual_bitrate" >> $output_csv
+      echo "$file_name_no_ext,$fps,$duration,$width,$height,$rate,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time,$actual_bitrate" >> $output_csv
 
-        fps=""
-        duration=""
-        width=""
-        height=""
+      fps=""
+      duration=""
+      width=""
+      height=""
     done
-  done
-fi
-
-if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
-  for codec in $CODECS; do
-    path_to_results="${path_to_results_base}$codec/"
-    mkdir -p "$path_to_results" 
-    
-    echo "_________________________________"
-    echo "$codec (VBR)"
-    
-    enc_info=$(extract_info_from_log "${path_to_results}execution_times.txt")
-    real_time=$(echo $enc_info | cut -d',' -f1)
-    user_time=$(echo $enc_info | cut -d',' -f2)
-    sys_time=$(echo $enc_info | cut -d',' -f3)
-    codec_library=$(echo $enc_info | cut -d',' -f4)
-
-    preset=$(get_preset_for_codec "$codec")
-
-    case $codec in
-      "AV1")
-        compressed_file="${path_to_results}output.ivf"
-        ;;
-      "VVC")
-        compressed_file="${path_to_results}output.266"
-        ;;
-      "HEVC")
-        compressed_file="${path_to_results}output.h265"
-        ;;
-    esac
-
-    ./vmaf --reference "$file_name" --distorted "${path_to_results}output_decoded_${codec}_${rate}k.${file_extension}" \
-      $width $height $pix_fmt $bit_depth \
-      --model version=vmaf_float_v0.6.1 -o "${path_to_results}results_${codec}.json" \
-      --json --feature psnr --feature float_ssim
-    echo "_________________________________"
-    
-    if [ "$file_extension" = "y4m" ]; then
-      extract_y4m_metadata
-    fi
-
-    actual_bitrate=$(calculate_actual_bitrate "${compressed_file}" "${duration}")
-    metrics=$(calculate_averages "${path_to_results}results_${codec}.json")
-    
-    echo "$codec,N/A,$actual_bitrate" >> "$actual_bitrate_file"
-
-    echo "$file_name_no_ext,$fps,$duration,$width,$height,N/A,$codec_library,$preset,$metrics,$real_time,$user_time,$sys_time,$actual_bitrate" >> $output_csv
-
-    fps=""
-    duration=""
-    width=""
-    height=""
   done
 fi
