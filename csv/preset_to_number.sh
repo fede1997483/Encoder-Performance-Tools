@@ -14,20 +14,20 @@ convert_preset() {
   codec=$1
   preset=$2
   case $codec in
-    "AV1")
+    "libaom-av1")
       echo "$preset" # I preset AV1 sono già numerici
       ;;
-    "VVC")
+    "libvvenc")
       case $preset in
         "faster") echo "5" ;;
         "fast") echo "4" ;;
         "medium") echo "3" ;;
         "slow") echo "2" ;;
         "slower") echo "1" ;;
-        *) echo "Unknown" ;;
+        *) echo "$preset" ;;
       esac
       ;;
-    "HEVC")
+    "libx265")
       case $preset in
         "ultrafast") echo "8" ;;
         "superfast") echo "7" ;;
