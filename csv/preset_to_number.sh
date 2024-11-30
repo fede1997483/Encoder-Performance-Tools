@@ -42,7 +42,7 @@ convert_preset() {
       esac
       ;;
     *)
-      echo "Unknown"
+      echo "$preset"
       ;;
   esac
 }
