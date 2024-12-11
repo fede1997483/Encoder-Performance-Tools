@@ -22,9 +22,6 @@ codecs_=$(echo "$CODECS" | tr ' ' '_')
 file_extension="${file_name##*.}"
 pix_fmt="-p ${PIX_FMT_FOR_VMAF}"
 bit_depth="-b ${BIT_DEPTH_FOR_VMAF}"
-output_csv="./results_${file_name_no_ext}_${file_config_name_no_ext}.csv"
-
-echo "seq_name,fps,duration,w,h,bitrate,codec,preset,vmaf,psnr_y,float_ssim,real,user,sys,actual_bitrate" > $output_csv
 
 extract_y4m_metadata() {
   fps=$(ffprobe -v error -select_streams v:0 -show_entries stream=r_frame_rate -of csv=p=0 "$file_name" | bc -l)
@@ -124,6 +121,10 @@ actual_bitrate_file="${path_to_results_base}actual_bitrate.txt"
 
 mkdir -p "$path_to_results_base"
 echo "codec,rate,actual_bitrate" > "$actual_bitrate_file"
+
+output_csv="${path_to_results_base}results_${file_name_no_ext}_${file_config_name_no_ext}_${bit_rates_}.csv"
+
+echo "seq_name,fps,duration,w,h,bitrate,codec,preset,vmaf,psnr_y,float_ssim,real,user,sys,actual_bitrate" > $output_csv
 
 if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
   for codec in $CODECS; do
