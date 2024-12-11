@@ -122,7 +122,7 @@ actual_bitrate_file="${path_to_results_base}actual_bitrate.txt"
 mkdir -p "$path_to_results_base"
 echo "codec,rate,actual_bitrate" > "$actual_bitrate_file"
 
-output_csv="${path_to_results_base}results_${file_name_no_ext}_${file_config_name_no_ext}_${bit_rates_}.csv"
+output_csv="./results_${file_name_no_ext}_${file_config_name_no_ext}_${bit_rates_}.csv"
 
 echo "seq_name,fps,duration,w,h,bitrate,codec,preset,vmaf,psnr_y,float_ssim,real,user,sys,actual_bitrate" > $output_csv
 
