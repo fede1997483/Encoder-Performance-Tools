@@ -38,7 +38,7 @@ convert_preset() {
         "slow") echo "2" ;;
         "veryslow") echo "1" ;;
         "placebo") echo "0" ;;
-        *) echo "Unknown" ;;
+        *) echo "$preset" ;;
       esac
       ;;
     *)
