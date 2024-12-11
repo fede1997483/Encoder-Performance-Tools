@@ -20,25 +20,39 @@ fi
 file_name=$1
 file_name_ext=$(basename "$file_name")
 file_name_no_ext="${file_name_ext%.*}"
-bit_rates_=$(echo "$BIT_RATES" | tr ' ' '_')
-codecs_=$(echo "$CODECS" | tr ' ' '_')
 width=$3
 height=$4
 fps=$5
 vvc_preset="$VVC_PRESET"
 vvc_enc_mode=$VVC_ENCODING_MODE
 
+for arg in "$@"; do
+  case "$arg" in
+    bitrate=*)
+      BIT_RATES="${arg#*=}"
+      # Aggiorna il valore di BIT_RATES nel file di configurazione
+      sed -i "s/^BIT_RATES=.*/BIT_RATES=\"$BIT_RATES\"/" "$file_config"
+      ;;
+  esac
+done
+
+
+
 path_to_results="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
+
+
 if [ "${ENCODE}" = "on" ]; then
   rm -rf ${path_to_results}
   mkdir -m 755 -p ${path_to_results}
   cp ${file_config} ${path_to_results}
 fi
+
 for codec in $CODECS; do
     echo "Processing file: ${file_name_ext} (codec: $codec)"
     sh ./encoding_scripts/encoding_bit_rate.sh $file_name $file_config $codec $width $height $fps
     echo "Encoding finished ($codec)."
 done
+
 
 if [ "${EVALUATE}" = "on" ]; then
   chmod +x ./vmaf
