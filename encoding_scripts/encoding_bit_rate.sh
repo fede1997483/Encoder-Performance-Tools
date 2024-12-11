@@ -11,7 +11,6 @@ file_name_ext=$(basename "$file_name")
 file_name_no_ext="${file_name_ext%.*}"
 codec=$3
 codecs_=$(echo "$CODECS" | tr ' ' '_')
-bit_rates_=$(echo "$BIT_RATES" | tr ' ' '_')
 file_extension="${file_name##*.}"
 width=$4
 height=$5
@@ -36,7 +35,9 @@ for arg in "$@"; do
   esac
 done
 
-path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
+bit_rates_=$(echo "$BIT_RATES" | tr ' ' '_')
+
+path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}_${bit_rates_}/"
 
 if [ "${file_extension}" = "y4m" ]; then
   pix_fmt=""

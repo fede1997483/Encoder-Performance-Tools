@@ -119,7 +119,7 @@ else
   duration="N/A"
 fi
 
-path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
+path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}_${bit_rates_}/"
 actual_bitrate_file="${path_to_results_base}actual_bitrate.txt"
 
 mkdir -p "$path_to_results_base"

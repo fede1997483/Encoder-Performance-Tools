@@ -35,7 +35,9 @@ for arg in "$@"; do
   esac
 done
 
-path_to_results="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
+bit_rates_=$(echo "$BIT_RATES" | tr ' ' '_')
+
+path_to_results="./results_${file_name_no_ext}_${file_config_name_no_ext}_${bit_rates_}/"
 
 
 if [ "${ENCODE}" = "on" ]; then
