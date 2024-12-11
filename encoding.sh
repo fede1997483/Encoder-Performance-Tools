@@ -29,14 +29,11 @@ vvc_enc_mode=$VVC_ENCODING_MODE
 for arg in "$@"; do
   case "$arg" in
     bitrate=*)
-      BIT_RATES="${arg#*=}"
-      # Aggiorna il valore di BIT_RATES nel file di configurazione
-      sed -i "s/^BIT_RATES=.*/BIT_RATES=\"$BIT_RATES\"/" "$file_config"
+      bit_rate_param="${arg}"
+      BIT_RATES=${arg#*=}
       ;;
   esac
 done
-
-
 
 path_to_results="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
 
@@ -49,14 +46,14 @@ fi
 
 for codec in $CODECS; do
     echo "Processing file: ${file_name_ext} (codec: $codec)"
-    sh ./encoding_scripts/encoding_bit_rate.sh $file_name $file_config $codec $width $height $fps
+    sh ./encoding_scripts/encoding_bit_rate.sh $file_name $file_config $codec $width $height $fps $bit_rate_param
     echo "Encoding finished ($codec)."
 done
 
 
 if [ "${EVALUATE}" = "on" ]; then
   chmod +x ./vmaf
-  sh ./vmaf_scripts/vmaf_bit_rate.sh $file_name $file_config $codec $width $height $fps
+  sh ./vmaf_scripts/vmaf_bit_rate.sh $file_name $file_config $codec $width $height $fps $bit_rate_param
 
   if [ "${vvc_enc_mode}" = "ABR" ]; then
     mkdir -m 755 -p "${path_to_results}graphs"

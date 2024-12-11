@@ -6,6 +6,14 @@ file_config_name_no_ext="${file_config_name_with_ext%.*}"
 file_config_extension="${file_config_name_with_ext##*.}"
 . ./${file_config}
 
+for arg in "$@"; do
+  case "$arg" in
+    bitrate=*)
+      BIT_RATES="${arg#*=}"
+      ;;
+  esac
+done
+
 file_name=$1
 file_name_ext=$(basename "$file_name")
 file_name_no_ext="${file_name_ext%.*}"

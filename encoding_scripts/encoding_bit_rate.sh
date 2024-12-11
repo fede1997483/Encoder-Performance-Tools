@@ -28,6 +28,14 @@ vvenc_prmts=$VVENC_PARAMETERS
 ffmpeg_hevc_prmts=$FFMPEG_HEVC_PARAMETERS
 hevc_prmts=$HEVC_PARAMETERS
 
+for arg in "$@"; do
+  case "$arg" in
+    bitrate=*)
+      BIT_RATES="${arg#*=}"
+      ;;
+  esac
+done
+
 path_to_results_base="./results_${file_name_no_ext}_${file_config_name_no_ext}/"
 
 if [ "${file_extension}" = "y4m" ]; then
