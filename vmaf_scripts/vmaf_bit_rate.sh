@@ -35,6 +35,9 @@ get_preset_for_codec() {
     "AV1")
       echo "$AV1_PRESET"
       ;;
+    "AV1-SVT")
+      echo "$AV1_PRESET"
+      ;;
     "VVC")
       case $VVC_PRESET in
         "faster") echo "5" ;;
@@ -81,6 +84,9 @@ extract_info_from_log() {
   case $codec in
     "AV1")
       codec_library="libaom-av1"
+      ;;
+    "AV1-SVT")
+      codec_library="libsvtav1"
       ;;
     "VVC")
       codec_library="libvvenc"
@@ -144,6 +150,9 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
 
       case $codec in
         "AV1")
+          compressed_file="${path_to_results}output_${rate}k.ivf"
+          ;;
+        "AV1-SVT")
           compressed_file="${path_to_results}output_${rate}k.ivf"
           ;;
         "VVC")

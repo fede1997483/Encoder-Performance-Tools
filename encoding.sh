@@ -57,11 +57,11 @@ if [ "${EVALUATE}" = "on" ]; then
   chmod +x ./vmaf
   sh ./vmaf_scripts/vmaf_bit_rate.sh $file_name $file_config $codec $width $height $fps $bit_rate_param
 
-  if [ "${vvc_enc_mode}" = "ABR" ]; then
-    mkdir -m 755 -p "${path_to_results}graphs"
-    cd ./python_scripts/
-    python3 vmaf.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
-    python3 psnr.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
-    cd ..
-  fi
+  #if [ "${vvc_enc_mode}" = "ABR" ]; then
+   # mkdir -m 755 -p "${path_to_results}graphs"
+   # cd ./python_scripts/
+   # python3 vmaf.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
+   # python3 psnr.py "${CODECS}" "${BIT_RATES}" "${file_name_ext}" "${vvc_preset}" "${vvc_enc_mode}" "${path_to_results}"
+   # cd ..
+  #fi
 fi
