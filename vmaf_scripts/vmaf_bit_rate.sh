@@ -80,6 +80,7 @@ extract_info_from_log() {
   real_time=$(grep "elapsed" "$log_file" | awk '{print $3}' | sed 's/elapsed//')
   user_time=$(grep "user" "$log_file" | awk '{print $1}' | sed 's/user//')
   sys_time=$(grep "sys" "$log_file" | awk '{print $2}' | sed 's/system//')
+  sys_time=$(echo "$sys_time" | grep -oP '[\d\.]+') # Extract only numeric value
 
   case $codec in
     "AV1")
