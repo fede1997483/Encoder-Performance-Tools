@@ -36,7 +36,7 @@ get_preset_for_codec() {
       echo "$AV1_PRESET"
       ;;
     "AV1-SVT")
-      echo "$AV1_PRESET"
+      echo "$SVT_PRESET"
       ;;
     "VVC")
       case $VVC_PRESET in
