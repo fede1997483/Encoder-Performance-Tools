@@ -20,8 +20,8 @@ s="-s ${width}x${height}"
 r="-r "$fps""
 hevc_preset="$HEVC_PRESET"
 vvc_preset="$VVC_PRESET"
-av1_preset="$AV1_PRESET"
-svt_preset="$SVT_PRESET"
+av1_svt_preset="$AV1_PRESET"
+svt_preset="$AV1_SVT_PRESET"
 vvc_enc_mode=$VVC_ENCODING_MODE
 ffmpeg_vvc_prmts=$FFMPEG_VVC_PARAMETERS
 vvenc_prmts=$VVENC_PARAMETERS
@@ -85,7 +85,7 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
     fi
     if [ $codec = "AV1-SVT" ]; then
       if [ "${ENCODE}" = "on" ]; then
-        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libsvtav1 -preset ${av1_preset} -b:v ${rate}k -f ivf ${path_to_results}output_${rate}k.ivf ; } 2>> ${path_to_results}execution_times_${rate}k.txt
+        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libsvtav1 -preset ${av1_svt_preset} -b:v ${rate}k -f ivf ${path_to_results}output_${rate}k.ivf ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       fi
       if [ "${DECODE}" = "on" ]; then
         ffmpeg -i ${path_to_results}output_${rate}k.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_AV1-SVT_${rate}k.${file_extension} -loglevel error
@@ -124,7 +124,7 @@ if [ ${VVC_ENCODING_MODE} = "VBR" ]; then
   fi
   if [ $codec = "AV1-SVT" ]; then
     if [ "${ENCODE}" = "on" ]; then
-      { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libsvtav1 -preset ${svt_preset} -f ivf ${path_to_results}output_svt.ivf ; } 2>> ${path_to_results}execution_times_svt.txt
+      { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libsvtav1 -preset ${av1_svt_preset} -f ivf ${path_to_results}output_svt.ivf ; } 2>> ${path_to_results}execution_times_svt.txt
     fi
     if [ "${DECODE}" = "on" ]; then
       ffmpeg -i ${path_to_results}output_svt.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_AV1_SVT.${file_extension} -loglevel error
