@@ -12,7 +12,7 @@ def generate_plots(csv_file):
         return
 
     # Verifica che le colonne richieste siano presenti
-    required_columns = {'seq_name', 'codec', 'actual_bitrate', 'vmaf', 'psnr_y', 'float_ssim'}
+    required_columns = {'seq_name', 'codec', 'preset', 'actual_bitrate', 'vmaf', 'psnr_y', 'float_ssim'}
     if not required_columns.issubset(data.columns):
         print(f"Il file CSV manca di una o più colonne richieste: {required_columns}")
         return
@@ -27,10 +27,11 @@ def generate_plots(csv_file):
     # Creazione dei grafici per ogni sequenza
     for seq in sequences:
         subset = data[data['seq_name'] == seq]
-        
-        # Metriche e codificatori unici
+
+        # Metriche e combinazioni di codec e preset
         metrics = ['vmaf', 'psnr_y', 'float_ssim']
         codecs = subset['codec'].unique()
+        presets = subset['preset'].unique()
 
         for metric in metrics:
             # Crea una sottocartella per ogni metrica
@@ -40,14 +41,23 @@ def generate_plots(csv_file):
             plt.figure(figsize=(8, 6))
 
             for codec in codecs:
-                codec_data = subset[subset['codec'] == codec]
-                plt.plot(codec_data['actual_bitrate'], codec_data[metric], marker='o', label=codec)
+                for preset in presets:
+                    # Filtra i dati per codec e preset
+                    codec_preset_data = subset[(subset['codec'] == codec) & (subset['preset'] == preset)]
+                    
+                    # Ordina i dati per bitrate
+                    codec_preset_data = codec_preset_data.sort_values(by='actual_bitrate')
+
+                    # Plotta solo se ci sono dati
+                    if not codec_preset_data.empty:
+                        label = f"{codec} ({preset})"
+                        plt.plot(codec_preset_data['actual_bitrate'], codec_preset_data[metric], marker='o', label=label)
 
             # Configurazione del grafico
             plt.title(f"{seq}_{metric.upper()}")
             plt.xlabel("Actual Bitrate (kbps)")
             plt.ylabel(metric.upper())
-            plt.legend(title="Codec")
+            plt.legend(title="Codec (Preset)", fontsize='small')
             plt.grid(True)
 
             # Salvataggio del grafico nella cartella specifica della metrica
