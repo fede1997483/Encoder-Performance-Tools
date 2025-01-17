@@ -9,3 +9,5 @@ rm ./merged_results.csv
 cd ..
 sh preset_to_number.sh merged_results.csv out.csv
 python3 graphs.py out.csv
+python3 graphs_time_colors.py out.csv
+python3 graphs_time_3d.py out.csv
