@@ -30,7 +30,7 @@ def generate_plots_by_preset(csv_file):
 
         presets_0_2 = subset[subset['preset'].astype(int).isin([0, 1, 2])]['preset'].unique()
         presets_3_4 = subset[subset['preset'].astype(int).isin([3, 4])]
-        higher_presets = subset[subset['preset'].astype(str).str.isdigit() & (subset['preset'].astype(int) >= 5)]['preset'].unique()
+        higher_presets = subset[subset['preset'].astype(str).str.isdigit() & (subset['preset'].astype(int) >= 5)]
 
         # Grafici per preset 0, 1, 2
         for preset in presets_0_2:
@@ -103,37 +103,38 @@ def generate_plots_by_preset(csv_file):
                 plt.close()
 
         # Grafici per preset >= 5
-        for preset in higher_presets:
-            preset_data = subset[subset['preset'].astype(int) == int(preset)]
-
+        if not higher_presets.empty:
             for metric in metrics:
                 plt.figure(figsize=(8, 6))
 
-                codecs = preset_data['codec'].unique()
+                codecs = higher_presets['codec'].unique()
                 style_index = 0
 
                 for codec in codecs:
-                    codec_data = preset_data[preset_data['codec'] == codec]
+                    codec_data = higher_presets[higher_presets['codec'] == codec]
                     codec_data = codec_data.sort_values(by='actual_bitrate')
 
                     if not codec_data.empty:
-                        label = f"{codec} (preset {preset})"
-                        line_style = line_styles[style_index % len(line_styles)]
-                        marker = markers[style_index % len(markers)]
-                        style_index += 1
+                        presets = codec_data['preset'].unique()
+                        for preset in presets:
+                            specific_preset_data = codec_data[codec_data['preset'].astype(int) == preset]
+                            label = f"{codec} (preset {preset})"
+                            line_style = line_styles[style_index % len(line_styles)]
+                            marker = markers[style_index % len(markers)]
+                            style_index += 1
 
-                        plt.plot(codec_data['actual_bitrate'], codec_data[metric],
-                                 linestyle=line_style, marker=marker, label=label)
+                            plt.plot(specific_preset_data['actual_bitrate'], specific_preset_data[metric],
+                                     linestyle=line_style, marker=marker, label=label)
 
-                plt.title(f"{seq} - Preset {preset} - {metric.upper()}")
+                plt.title(f"{seq} - Preset >= 5 - {metric.upper()}")
                 plt.xlabel("Actual Bitrate (kbps)")
                 plt.ylabel(metric.upper())
                 plt.legend(title="Codec", fontsize='small')
                 plt.grid(True)
 
-                output_dir = os.path.join(base_output_dir, f"Preset_{preset}", metric.upper())
+                output_dir = os.path.join(base_output_dir, "Preset_5_and_above", metric.upper())
                 os.makedirs(output_dir, exist_ok=True)
-                plot_file = os.path.join(output_dir, f"{seq}_Preset_{preset}_{metric.upper()}.png")
+                plot_file = os.path.join(output_dir, f"{seq}_Preset_5_and_above_{metric.upper()}.png")
                 plt.savefig(plot_file)
                 plt.close()
 
