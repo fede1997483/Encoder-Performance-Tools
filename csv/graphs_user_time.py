@@ -36,9 +36,15 @@ def generate_execution_time_histograms(csv_file):
 
             for idx, codec in enumerate(codecs):
                 codec_data = avg_execution_time[avg_execution_time['codec'] == codec]
-                times = [codec_data[codec_data['preset'] == p]['user'].values[0] if p in codec_data['preset'].values else 0 for p in presets]
-
-                plt.bar([p + idx * bar_width for p in positions], times, bar_width, label=codec)
+                times = [codec_data[codec_data['preset'] == p]['user'].values[0] if p in codec_data['preset'].values else None for p in presets]
+                bar_positions = [p + idx * bar_width for p in positions]
+                
+                bars = plt.bar(bar_positions, [t if t is not None else 0 for t in times], bar_width, label=codec)
+                
+                # Aggiunta delle etichette sopra ogni barra con il valore del preset solo se la barra non è zero
+                for bar, preset, time in zip(bars, presets, times):
+                    if time is not None and time > 0:
+                        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height(), preset, ha='center', va='bottom', fontsize=9)
 
             plt.title(f"Average Execution Time - {seq}")
             plt.xlabel("Preset")
@@ -48,7 +54,7 @@ def generate_execution_time_histograms(csv_file):
             plt.grid(axis='y', linestyle='--', alpha=0.7)
 
             plot_file = os.path.join(base_output_dir, f"{seq}_execution_time_histogram.png")
-            plt.savefig(plot_file)
+            plt.savefig(plot_file, bbox_inches='tight')
             plt.close()
 
     print(f"Gli istogrammi dei tempi di esecuzione medi sono stati salvati nella directory: {base_output_dir}")
@@ -59,3 +65,4 @@ if __name__ == "__main__":
     else:
         csv_file = sys.argv[1]
         generate_execution_time_histograms(csv_file)
+
