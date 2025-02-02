@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Percorso del file originale
-file_path = 'out.csv'
+file_path = 'merged_results_updated_new_test7.csv'
 
 # Caricamento del file CSV
 df = pd.read_csv(file_path)

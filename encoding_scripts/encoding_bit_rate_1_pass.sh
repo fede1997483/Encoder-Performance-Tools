@@ -61,8 +61,7 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
     echo "."
     if [ $codec = "HEVC" ]; then
       if [ "${ENCODE}" = "on" ]; then
-        ffmpeg -y $s $r ${pix_fmt} -i $file_name -c:v libx265 -preset ${ffmpeg_hevc_prmts} ${hevc_preset} -b:v ${rate}k ${hevc_prmts} -pass 1 -f null /dev/null
-        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libx265 -preset ${ffmpeg_hevc_prmts} ${hevc_preset} -b:v ${rate}k ${hevc_prmts} -pass 2 -f hevc ${path_to_results}output_${rate}k.h265 ; } 2>> ${path_to_results}execution_times_${rate}k.txt
+        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libx265 -preset ${ffmpeg_hevc_prmts} ${hevc_preset} -b:v ${rate}k ${hevc_prmts} -f hevc ${path_to_results}output_${rate}k.h265 ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       fi
       if [ "${DECODE}" = "on" ]; then
         ffmpeg -i ${path_to_results}output_${rate}k.h265 -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_HEVC_${rate}k.${file_extension} -loglevel error
@@ -70,8 +69,7 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
     fi
     if [ $codec = "VVC" ]; then
       if [ "${ENCODE}" = "on" ]; then
-        ffmpeg -y $s $r ${pix_fmt} -i $file_name -c:v libvvenc ${ffmpeg_vvc_prmts} -preset ${vvc_preset} -b:v ${rate}k ${vvenc_prmts} -pass 1 -f null /dev/null
-        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libvvenc ${ffmpeg_vvc_prmts} -preset ${vvc_preset} -b:v ${rate}k ${vvenc_prmts} -pass 2 -f rawvideo ${path_to_results}output_${rate}k.266 ; } 2>> ${path_to_results}execution_times_${rate}k.txt
+        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libvvenc ${ffmpeg_vvc_prmts} -preset ${vvc_preset} -b:v ${rate}k ${vvenc_prmts} -f rawvideo ${path_to_results}output_${rate}k.266 ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       fi
       if [ "${DECODE}" = "on" ]; then
         ffmpeg -i ${path_to_results}output_${rate}k.266 -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_VVC_${rate}k.${file_extension} -loglevel error
@@ -79,8 +77,7 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
     fi
     if [ $codec = "AV1" ]; then
       if [ "${ENCODE}" = "on" ]; then
-        ffmpeg -y $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -cpu-used ${av1_preset} -b:v ${rate}k -pass 1 -f null /dev/null
-        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -cpu-used ${av1_preset} -b:v ${rate}k -pass 2 -f ivf ${path_to_results}output_${rate}k.ivf ; } 2>> ${path_to_results}execution_times_${rate}k.txt
+        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libaom-av1 -cpu-used ${av1_preset} -b:v ${rate}k -f ivf ${path_to_results}output_${rate}k.ivf ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       fi
       if [ "${DECODE}" = "on" ]; then
         ffmpeg -i ${path_to_results}output_${rate}k.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_AV1_${rate}k.${file_extension} -loglevel error
@@ -88,8 +85,7 @@ if [ ${VVC_ENCODING_MODE} = "ABR" ]; then
     fi
     if [ $codec = "AV1-SVT" ]; then
       if [ "${ENCODE}" = "on" ]; then
-        ffmpeg -y $s $r ${pix_fmt} -i $file_name -c:v libsvtav1 -preset ${av1_svt_preset} -b:v ${rate}k -pass 1 -f null /dev/null
-        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libsvtav1 -preset ${av1_svt_preset} -b:v ${rate}k -pass 2 -f ivf ${path_to_results}output_${rate}k.ivf ; } 2>> ${path_to_results}execution_times_${rate}k.txt
+        { time ffmpeg $s $r ${pix_fmt} -i $file_name -c:v libsvtav1 -preset ${av1_svt_preset} -b:v ${rate}k -f ivf ${path_to_results}output_${rate}k.ivf ; } 2>> ${path_to_results}execution_times_${rate}k.txt
       fi
       if [ "${DECODE}" = "on" ]; then
         ffmpeg -i ${path_to_results}output_${rate}k.ivf -pix_fmt ${PIX_FMT_FOR_ENC_DEC} ${path_to_results}output_decoded_AV1-SVT_${rate}k.${file_extension} -loglevel error
