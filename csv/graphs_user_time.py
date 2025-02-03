@@ -15,6 +15,9 @@ def generate_execution_time_histograms(csv_file):
         print(f"Il file CSV manca di una o più colonne richieste: {required_columns}")
         return
 
+    # Filtra i preset 0 e 1
+    data = data[~data['preset'].isin([0, 1])]
+
     base_output_dir = os.path.join(os.getcwd(), "execution_time_histograms")
     os.makedirs(base_output_dir, exist_ok=True)
 
@@ -65,4 +68,5 @@ if __name__ == "__main__":
     else:
         csv_file = sys.argv[1]
         generate_execution_time_histograms(csv_file)
+
 

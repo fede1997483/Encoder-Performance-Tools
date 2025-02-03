@@ -3,7 +3,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
-
 import matplotlib.colors as mcolors
 
 def generate_plots_by_sequence(csv_file):
@@ -18,6 +17,9 @@ def generate_plots_by_sequence(csv_file):
         print(f"Il file CSV manca di una o più colonne richieste: {required_columns}")
         return
 
+    # Filtra i preset 0 e 1
+    data = data[~data['preset'].isin([0, 1])]
+
     base_output_dir = os.path.join(os.getcwd(), "plots_by_sequence")
     os.makedirs(base_output_dir, exist_ok=True)
 
@@ -25,7 +27,14 @@ def generate_plots_by_sequence(csv_file):
     metrics = ['vmaf', 'psnr_y']
     line_styles = ['-', '--', '-.', ':']  # Stile linea per codec
     markers = ['o', 's', '^', 'D', 'x', '+']  # Marker per preset
-    colors = list(mcolors.TABLEAU_COLORS.values())  # Lista di colori predefiniti
+    
+    codec_colors = {
+        "libx265": "blue",
+        "libaom-av1": "darkorange",
+        "libvvenc_1.12.1": "red",
+        "libsvtav1": "green"
+    }
+    default_colors = list(mcolors.TABLEAU_COLORS.values())  # Colori predefiniti
 
     for seq in sequences:
         subset = data[data['seq_name'] == seq]
@@ -33,7 +42,15 @@ def generate_plots_by_sequence(csv_file):
         presets = sorted(subset['preset'].astype(str).unique(), key=lambda x: int(x) if x.isdigit() else float('inf'))
 
         fig, axs = plt.subplots(2, 1, figsize=(10, 12))  # Disposizione verticale
-        color_map = {codec: colors[i % len(colors)] for i, codec in enumerate(codecs)}  # Mappa codec -> colore
+        
+        color_map = {}
+        color_index = 0
+        for codec in codecs:
+            if codec in codec_colors:
+                color_map[codec] = codec_colors[codec]
+            else:
+                color_map[codec] = default_colors[color_index % len(default_colors)]
+                color_index += 1
 
         for metric_idx, metric in enumerate(metrics):
             ax = axs[metric_idx]
