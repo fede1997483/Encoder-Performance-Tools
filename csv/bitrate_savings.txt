@@ -1,5 +1,37 @@
 Dettagli risparmio bitrate per intervallo di VMAF:
                      seq_name  vmaf_bin           codec  bitrate_savings_%
+             Sparks_cut_15_4K        68 libvvenc_1.12.1          40.144718
+             Sparks_cut_15_4K        76 libvvenc_1.12.1          38.023724
+             Sparks_cut_15_4K        78 libvvenc_1.12.1          36.268251
+             Sparks_cut_15_4K        79 libvvenc_1.12.1          34.722366
+             Sparks_cut_15_4K        81 libvvenc_1.12.1          36.543798
+             Sparks_cut_15_4K        84 libvvenc_1.12.1          34.065518
+             Sparks_cut_15_4K        85 libvvenc_1.12.1          35.487145
+             Sparks_cut_15_4K        86 libvvenc_1.12.1          34.356970
+             Sparks_cut_15_4K        87 libvvenc_1.12.1          30.630786
+             Sparks_cut_15_4K        88 libvvenc_1.12.1          31.955177
+             Sparks_cut_15_4K        89 libvvenc_1.12.1          28.243433
+             Sparks_cut_15_4K        56      libaom-av1          33.523731
+             Sparks_cut_15_4K        63      libaom-av1          35.541070
+             Sparks_cut_15_4K        68      libaom-av1          36.214648
+             Sparks_cut_15_4K        72      libaom-av1          35.420539
+             Sparks_cut_15_4K        78      libaom-av1          32.996021
+             Sparks_cut_15_4K        80      libaom-av1          33.918686
+             Sparks_cut_15_4K        84      libaom-av1          31.495840
+             Sparks_cut_15_4K        85      libaom-av1          32.257995
+             Sparks_cut_15_4K        86      libaom-av1          30.231220
+             Sparks_cut_15_4K        88      libaom-av1          33.548465
+             Sparks_cut_15_4K        89      libaom-av1          27.775941
+             Sparks_cut_15_4K        68       libsvtav1          30.438208
+             Sparks_cut_15_4K        72       libsvtav1          31.581153
+             Sparks_cut_15_4K        79       libsvtav1          27.562220
+             Sparks_cut_15_4K        81       libsvtav1          28.635150
+             Sparks_cut_15_4K        83       libsvtav1          26.460740
+             Sparks_cut_15_4K        84       libsvtav1          24.577782
+             Sparks_cut_15_4K        86       libsvtav1          28.477493
+             Sparks_cut_15_4K        87       libsvtav1          26.813880
+             Sparks_cut_15_4K        88       libsvtav1          27.791740
+             Sparks_cut_15_4K        89       libsvtav1          26.247664
           CSGO_30fps_30sec_v2        92      libaom-av1          34.132539
           CSGO_30fps_30sec_v2        94      libaom-av1          38.126752
           CSGO_30fps_30sec_v2        95      libaom-av1          33.903097
@@ -80,21 +112,6 @@ Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
           Sparks_cut_15_1080p        78 libvvenc_1.12.1          33.536495
           Sparks_cut_15_1080p        90 libvvenc_1.12.1          26.767298
           Sparks_cut_15_1080p        94 libvvenc_1.12.1          32.254821
-             Sparks_cut_15_4K        56      libaom-av1          33.523731
-             Sparks_cut_15_4K        63      libaom-av1          35.541070
-             Sparks_cut_15_4K        68      libaom-av1          36.214648
-             Sparks_cut_15_4K        72      libaom-av1          35.420539
-             Sparks_cut_15_4K        78      libaom-av1          32.996021
-             Sparks_cut_15_4K        80      libaom-av1          33.918686
-             Sparks_cut_15_4K        68       libsvtav1          30.438208
-             Sparks_cut_15_4K        72       libsvtav1          31.581153
-             Sparks_cut_15_4K        79       libsvtav1          27.562220
-             Sparks_cut_15_4K        81       libsvtav1          28.635150
-             Sparks_cut_15_4K        68 libvvenc_1.12.1          40.144718
-             Sparks_cut_15_4K        76 libvvenc_1.12.1          38.023724
-             Sparks_cut_15_4K        78 libvvenc_1.12.1          36.268251
-             Sparks_cut_15_4K        79 libvvenc_1.12.1          34.722366
-             Sparks_cut_15_4K        81 libvvenc_1.12.1          36.543798
         bigbuck_bunny_8bit_4k        86      libaom-av1          52.201466
         bigbuck_bunny_8bit_4k        89      libaom-av1          55.196882
         bigbuck_bunny_8bit_4k        92      libaom-av1          57.582532
@@ -219,9 +236,9 @@ Daydreamer_SDR_8s_3840x2160_8 libvvenc_1.12.1           0.921138
              Sparks_cut_13_4k libvvenc_1.12.1          44.879236
           Sparks_cut_15_1080p       libsvtav1          18.362330
           Sparks_cut_15_1080p libvvenc_1.12.1          30.852871
-             Sparks_cut_15_4K      libaom-av1          34.602449
-             Sparks_cut_15_4K       libsvtav1          29.554183
-             Sparks_cut_15_4K libvvenc_1.12.1          37.140571
+             Sparks_cut_15_4K      libaom-av1          32.993105
+             Sparks_cut_15_4K       libsvtav1          27.858603
+             Sparks_cut_15_4K libvvenc_1.12.1          34.585626
         bigbuck_bunny_8bit_4k      libaom-av1          54.433507
         bigbuck_bunny_8bit_4k       libsvtav1          49.185879
         bigbuck_bunny_8bit_4k libvvenc_1.12.1          45.853596
@@ -246,6 +263,6 @@ Daydreamer_SDR_8s_3840x2160_8 libvvenc_1.12.1           0.921138
 
 Risparmio medio di bitrate complessivo per ogni codec:
           codec  bitrate_savings_%
-     libaom-av1          38.280125
-      libsvtav1          37.185873
-libvvenc_1.12.1          30.370310
+     libaom-av1          37.757065
+      libsvtav1          36.337955
+libvvenc_1.12.1          30.549127

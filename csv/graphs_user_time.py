@@ -47,7 +47,7 @@ def generate_execution_time_histograms(csv_file):
                 # Aggiunta delle etichette sopra ogni barra con il valore del preset solo se la barra non è zero
                 for bar, preset, time in zip(bars, presets, times):
                     if time is not None and time > 0:
-                        plt.text(bar.get_x() + bar.get_width()/2, bar.get_height(), preset, ha='center', va='bottom', fontsize=9)
+                        plt.text(bar.get_x() + bar.get_width()/2, 0, preset, ha='center', va='bottom', fontsize=9)
 
             plt.title(f"Average Execution Time - {seq}")
             plt.xlabel("Preset")
