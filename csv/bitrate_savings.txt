@@ -1,37 +1,5 @@
 Dettagli risparmio bitrate per intervallo di VMAF:
                      seq_name  vmaf_bin           codec  bitrate_savings_%
-             Sparks_cut_15_4K        68 libvvenc_1.12.1          40.144718
-             Sparks_cut_15_4K        76 libvvenc_1.12.1          38.023724
-             Sparks_cut_15_4K        78 libvvenc_1.12.1          36.268251
-             Sparks_cut_15_4K        79 libvvenc_1.12.1          34.722366
-             Sparks_cut_15_4K        81 libvvenc_1.12.1          36.543798
-             Sparks_cut_15_4K        84 libvvenc_1.12.1          34.065518
-             Sparks_cut_15_4K        85 libvvenc_1.12.1          35.487145
-             Sparks_cut_15_4K        86 libvvenc_1.12.1          34.356970
-             Sparks_cut_15_4K        87 libvvenc_1.12.1          30.630786
-             Sparks_cut_15_4K        88 libvvenc_1.12.1          31.955177
-             Sparks_cut_15_4K        89 libvvenc_1.12.1          28.243433
-             Sparks_cut_15_4K        56      libaom-av1          33.523731
-             Sparks_cut_15_4K        63      libaom-av1          35.541070
-             Sparks_cut_15_4K        68      libaom-av1          36.214648
-             Sparks_cut_15_4K        72      libaom-av1          35.420539
-             Sparks_cut_15_4K        78      libaom-av1          32.996021
-             Sparks_cut_15_4K        80      libaom-av1          33.918686
-             Sparks_cut_15_4K        84      libaom-av1          31.495840
-             Sparks_cut_15_4K        85      libaom-av1          32.257995
-             Sparks_cut_15_4K        86      libaom-av1          30.231220
-             Sparks_cut_15_4K        88      libaom-av1          33.548465
-             Sparks_cut_15_4K        89      libaom-av1          27.775941
-             Sparks_cut_15_4K        68       libsvtav1          30.438208
-             Sparks_cut_15_4K        72       libsvtav1          31.581153
-             Sparks_cut_15_4K        79       libsvtav1          27.562220
-             Sparks_cut_15_4K        81       libsvtav1          28.635150
-             Sparks_cut_15_4K        83       libsvtav1          26.460740
-             Sparks_cut_15_4K        84       libsvtav1          24.577782
-             Sparks_cut_15_4K        86       libsvtav1          28.477493
-             Sparks_cut_15_4K        87       libsvtav1          26.813880
-             Sparks_cut_15_4K        88       libsvtav1          27.791740
-             Sparks_cut_15_4K        89       libsvtav1          26.247664
           CSGO_30fps_30sec_v2        92      libaom-av1          34.132539
           CSGO_30fps_30sec_v2        94      libaom-av1          38.126752
           CSGO_30fps_30sec_v2        95      libaom-av1          33.903097
@@ -81,6 +49,38 @@ Daydreamer_SDR_8s_3840x2160_8        86 libvvenc_1.12.1           9.820698
 Daydreamer_SDR_8s_3840x2160_8        87 libvvenc_1.12.1           9.789424
 Daydreamer_SDR_8s_3840x2160_8        88 libvvenc_1.12.1          16.092553
 Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
+ Giftmord-SDR_8s_11_1920x1080        82      libaom-av1          48.800915
+ Giftmord-SDR_8s_11_1920x1080        90      libaom-av1          46.036403
+ Giftmord-SDR_8s_11_1920x1080        89       libsvtav1          48.119252
+ Giftmord-SDR_8s_11_1920x1080        91       libsvtav1          55.605500
+ Giftmord-SDR_8s_11_1920x1080        91 libvvenc_1.12.1          60.530703
+ Giftmord-SDR_8s_11_3840x2160        83      libaom-av1          56.247693
+ Giftmord-SDR_8s_11_3840x2160        85      libaom-av1          47.705890
+ Giftmord-SDR_8s_11_3840x2160        86      libaom-av1          44.118995
+ Giftmord-SDR_8s_11_3840x2160        88      libaom-av1          39.258830
+ Giftmord-SDR_8s_11_3840x2160        90      libaom-av1          26.968480
+ Giftmord-SDR_8s_11_3840x2160        91      libaom-av1          14.258788
+ Giftmord-SDR_8s_11_3840x2160        92      libaom-av1           7.197913
+ Giftmord-SDR_8s_11_3840x2160        93      libaom-av1           2.486172
+ Giftmord-SDR_8s_11_3840x2160        94      libaom-av1          -3.758798
+ Giftmord-SDR_8s_11_3840x2160        85       libsvtav1          63.026855
+ Giftmord-SDR_8s_11_3840x2160        86       libsvtav1          59.443738
+ Giftmord-SDR_8s_11_3840x2160        88       libsvtav1          56.887509
+ Giftmord-SDR_8s_11_3840x2160        89       libsvtav1          40.772266
+ Giftmord-SDR_8s_11_3840x2160        91       libsvtav1          38.767406
+ Giftmord-SDR_8s_11_3840x2160        92       libsvtav1          25.475470
+ Giftmord-SDR_8s_11_3840x2160        93       libsvtav1          20.110577
+ Giftmord-SDR_8s_11_3840x2160        94       libsvtav1          13.518915
+ Giftmord-SDR_8s_11_3840x2160        80 libvvenc_1.12.1          65.201020
+ Giftmord-SDR_8s_11_3840x2160        84 libvvenc_1.12.1          65.210792
+ Giftmord-SDR_8s_11_3840x2160        86 libvvenc_1.12.1          65.183728
+ Giftmord-SDR_8s_11_3840x2160        88 libvvenc_1.12.1          58.286896
+ Giftmord-SDR_8s_11_3840x2160        89 libvvenc_1.12.1          52.903436
+ Giftmord-SDR_8s_11_3840x2160        90 libvvenc_1.12.1          37.455838
+ Giftmord-SDR_8s_11_3840x2160        91 libvvenc_1.12.1          30.610686
+ Giftmord-SDR_8s_11_3840x2160        92 libvvenc_1.12.1          25.889302
+ Giftmord-SDR_8s_11_3840x2160        93 libvvenc_1.12.1          10.147958
+ Giftmord-SDR_8s_11_3840x2160        94 libvvenc_1.12.1          18.730524
    Hearthstone_30fps_30sec_v2        94      libaom-av1          59.090466
    Hearthstone_30fps_30sec_v2        95      libaom-av1          56.454711
    Hearthstone_30fps_30sec_v2        92       libsvtav1          41.405257
@@ -112,6 +112,38 @@ Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
           Sparks_cut_15_1080p        78 libvvenc_1.12.1          33.536495
           Sparks_cut_15_1080p        90 libvvenc_1.12.1          26.767298
           Sparks_cut_15_1080p        94 libvvenc_1.12.1          32.254821
+             Sparks_cut_15_4K        56      libaom-av1          33.523731
+             Sparks_cut_15_4K        63      libaom-av1          35.541070
+             Sparks_cut_15_4K        68      libaom-av1          36.214648
+             Sparks_cut_15_4K        72      libaom-av1          35.420539
+             Sparks_cut_15_4K        78      libaom-av1          32.996021
+             Sparks_cut_15_4K        80      libaom-av1          33.918686
+             Sparks_cut_15_4K        84      libaom-av1          31.495840
+             Sparks_cut_15_4K        85      libaom-av1          32.257995
+             Sparks_cut_15_4K        86      libaom-av1          30.231220
+             Sparks_cut_15_4K        88      libaom-av1          33.548465
+             Sparks_cut_15_4K        89      libaom-av1          27.775941
+             Sparks_cut_15_4K        68       libsvtav1          30.438208
+             Sparks_cut_15_4K        72       libsvtav1          31.581153
+             Sparks_cut_15_4K        79       libsvtav1          27.562220
+             Sparks_cut_15_4K        81       libsvtav1          28.635150
+             Sparks_cut_15_4K        83       libsvtav1          26.460740
+             Sparks_cut_15_4K        84       libsvtav1          24.577782
+             Sparks_cut_15_4K        86       libsvtav1          28.477493
+             Sparks_cut_15_4K        87       libsvtav1          26.813880
+             Sparks_cut_15_4K        88       libsvtav1          27.791740
+             Sparks_cut_15_4K        89       libsvtav1          26.247664
+             Sparks_cut_15_4K        68 libvvenc_1.12.1          40.144718
+             Sparks_cut_15_4K        76 libvvenc_1.12.1          38.023724
+             Sparks_cut_15_4K        78 libvvenc_1.12.1          36.268251
+             Sparks_cut_15_4K        79 libvvenc_1.12.1          34.722366
+             Sparks_cut_15_4K        81 libvvenc_1.12.1          36.543798
+             Sparks_cut_15_4K        84 libvvenc_1.12.1          34.065518
+             Sparks_cut_15_4K        85 libvvenc_1.12.1          35.487145
+             Sparks_cut_15_4K        86 libvvenc_1.12.1          34.356970
+             Sparks_cut_15_4K        87 libvvenc_1.12.1          30.630786
+             Sparks_cut_15_4K        88 libvvenc_1.12.1          31.955177
+             Sparks_cut_15_4K        89 libvvenc_1.12.1          28.243433
         bigbuck_bunny_8bit_4k        86      libaom-av1          52.201466
         bigbuck_bunny_8bit_4k        89      libaom-av1          55.196882
         bigbuck_bunny_8bit_4k        92      libaom-av1          57.582532
@@ -152,6 +184,20 @@ Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
        cutting_orange_tuil_4k        90 libvvenc_1.12.1          45.348476
        cutting_orange_tuil_4k        92 libvvenc_1.12.1          47.488974
        cutting_orange_tuil_4k        93 libvvenc_1.12.1          54.367000
+        vegetables_tuil_1080p        85      libaom-av1          64.160221
+        vegetables_tuil_1080p        89      libaom-av1          58.920388
+        vegetables_tuil_1080p        92      libaom-av1          54.308368
+        vegetables_tuil_1080p        93      libaom-av1          49.749805
+        vegetables_tuil_1080p        94      libaom-av1          46.909289
+        vegetables_tuil_1080p        85       libsvtav1          65.973484
+        vegetables_tuil_1080p        90       libsvtav1          62.845216
+        vegetables_tuil_1080p        92       libsvtav1          47.707216
+        vegetables_tuil_1080p        93       libsvtav1          48.151649
+        vegetables_tuil_1080p        94       libsvtav1          50.505230
+        vegetables_tuil_1080p        80 libvvenc_1.12.1          60.924928
+        vegetables_tuil_1080p        90 libvvenc_1.12.1          56.823699
+        vegetables_tuil_1080p        92 libvvenc_1.12.1          49.246624
+        vegetables_tuil_1080p        94 libvvenc_1.12.1          55.131496
            vegetables_tuil_4k        88      libaom-av1          63.896469
            vegetables_tuil_4k        91      libaom-av1          60.994213
            vegetables_tuil_4k        92      libaom-av1          62.695460
@@ -169,10 +215,15 @@ Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
            vegetables_tuil_4k        94 libvvenc_1.12.1          60.303194
           water_netflix_1080p        89      libaom-av1           4.143139
           water_netflix_1080p        92      libaom-av1           1.055477
+          water_netflix_1080p        94      libaom-av1           9.068547
+          water_netflix_1080p        95      libaom-av1           5.939986
           water_netflix_1080p        93       libsvtav1           7.124429
+          water_netflix_1080p        94       libsvtav1           6.889294
+          water_netflix_1080p        95       libsvtav1           5.131875
           water_netflix_1080p        82 libvvenc_1.12.1          16.805862
           water_netflix_1080p        92 libvvenc_1.12.1           9.171957
           water_netflix_1080p        93 libvvenc_1.12.1          11.827517
+          water_netflix_1080p        94 libvvenc_1.12.1          13.303399
              water_netflix_4k        86      libaom-av1          -1.550829
              water_netflix_4k        90      libaom-av1          -4.665011
              water_netflix_4k        91      libaom-av1          -6.092507
@@ -182,6 +233,9 @@ Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
              water_netflix_4k        95      libaom-av1          -9.870002
              water_netflix_4k        96      libaom-av1         -17.117525
              water_netflix_4k        97      libaom-av1         -26.510632
+             water_netflix_4k        98      libaom-av1         -25.528170
+             water_netflix_4k        99      libaom-av1         -23.881664
+             water_netflix_4k        71       libsvtav1          15.593695
              water_netflix_4k        80       libsvtav1          10.632518
              water_netflix_4k        86       libsvtav1           8.295752
              water_netflix_4k        88       libsvtav1           7.703194
@@ -192,6 +246,7 @@ Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
              water_netflix_4k        95       libsvtav1          11.723716
              water_netflix_4k        96       libsvtav1          -2.374900
              water_netflix_4k        97       libsvtav1          -2.011856
+             water_netflix_4k        71 libvvenc_1.12.1           9.845571
              water_netflix_4k        86 libvvenc_1.12.1           4.201816
              water_netflix_4k        88 libvvenc_1.12.1           3.631914
              water_netflix_4k        91 libvvenc_1.12.1           5.705842
@@ -199,20 +254,6 @@ Daydreamer_SDR_8s_3840x2160_8        89 libvvenc_1.12.1          16.591457
              water_netflix_4k        93 libvvenc_1.12.1           1.772959
              water_netflix_4k        94 libvvenc_1.12.1           3.127487
              water_netflix_4k        95 libvvenc_1.12.1          -0.941442
-        vegetables_tuil_1080p        85      libaom-av1          64.160221
-        vegetables_tuil_1080p        89      libaom-av1          58.920388
-        vegetables_tuil_1080p        92      libaom-av1          54.308368
-        vegetables_tuil_1080p        93      libaom-av1          49.749805
-        vegetables_tuil_1080p        94      libaom-av1          46.909289
-        vegetables_tuil_1080p        85       libsvtav1          65.973484
-        vegetables_tuil_1080p        90       libsvtav1          62.845216
-        vegetables_tuil_1080p        92       libsvtav1          47.707216
-        vegetables_tuil_1080p        93       libsvtav1          48.151649
-        vegetables_tuil_1080p        94       libsvtav1          50.505230
-        vegetables_tuil_1080p        80 libvvenc_1.12.1          60.924928
-        vegetables_tuil_1080p        90 libvvenc_1.12.1          56.823699
-        vegetables_tuil_1080p        92 libvvenc_1.12.1          49.246624
-        vegetables_tuil_1080p        94 libvvenc_1.12.1          55.131496
 
 Risparmio medio di bitrate per sequenza e codec:
                      seq_name           codec  bitrate_savings_%
@@ -225,6 +266,12 @@ Daydreamer_SDR_8s_1920x1080_8 libvvenc_1.12.1          29.912089
 Daydreamer_SDR_8s_3840x2160_8      libaom-av1          18.153634
 Daydreamer_SDR_8s_3840x2160_8       libsvtav1          21.510724
 Daydreamer_SDR_8s_3840x2160_8 libvvenc_1.12.1           0.921138
+ Giftmord-SDR_8s_11_1920x1080      libaom-av1          47.418659
+ Giftmord-SDR_8s_11_1920x1080       libsvtav1          51.862376
+ Giftmord-SDR_8s_11_1920x1080 libvvenc_1.12.1          60.530703
+ Giftmord-SDR_8s_11_3840x2160      libaom-av1          26.053774
+ Giftmord-SDR_8s_11_3840x2160       libsvtav1          39.750342
+ Giftmord-SDR_8s_11_3840x2160 libvvenc_1.12.1          42.962018
    Hearthstone_30fps_30sec_v2      libaom-av1          57.772588
    Hearthstone_30fps_30sec_v2       libsvtav1          43.521769
    Hearthstone_30fps_30sec_v2 libvvenc_1.12.1           1.553839
@@ -254,15 +301,15 @@ Daydreamer_SDR_8s_3840x2160_8 libvvenc_1.12.1           0.921138
            vegetables_tuil_4k      libaom-av1          60.061796
            vegetables_tuil_4k       libsvtav1          59.752948
            vegetables_tuil_4k libvvenc_1.12.1          58.933079
-          water_netflix_1080p      libaom-av1           2.599308
-          water_netflix_1080p       libsvtav1           7.124429
-          water_netflix_1080p libvvenc_1.12.1          12.601779
-             water_netflix_4k      libaom-av1         -10.190313
-             water_netflix_4k       libsvtav1           8.083260
-             water_netflix_4k libvvenc_1.12.1           2.545066
+          water_netflix_1080p      libaom-av1           5.051787
+          water_netflix_1080p       libsvtav1           6.381866
+          water_netflix_1080p libvvenc_1.12.1          12.777184
+             water_netflix_4k      libaom-av1         -12.829332
+             water_netflix_4k       libsvtav1           8.766027
+             water_netflix_4k libvvenc_1.12.1           3.457629
 
 Risparmio medio di bitrate complessivo per ogni codec:
           codec  bitrate_savings_%
-     libaom-av1          37.757065
-      libsvtav1          36.337955
-libvvenc_1.12.1          30.549127
+     libaom-av1          34.525684
+      libsvtav1          36.073000
+libvvenc_1.12.1          31.948659

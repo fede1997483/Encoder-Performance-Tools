@@ -3,8 +3,8 @@ import pandas as pd
 # Percorso del file originale
 file_path = 'merged_results_updated.csv'
 
-# Caricamento del file CSV
-df = pd.read_csv(file_path)
+# Caricamento del file CSV senza alterare i tipi di dati
+df = pd.read_csv(file_path, dtype=str)
 
 # Mappatura delle sequenze da modificare
 sequence_name_changes = {
@@ -19,9 +19,9 @@ sequence_name_changes = {
 # Modifica dei nomi delle sequenze
 df['seq_name'] = df['seq_name'].replace(sequence_name_changes)
 
-# Salvataggio del nuovo file con i nomi aggiornati
-output_file_path = 'modified_sequences.csv'
-df.to_csv(output_file_path, index=False)
+# Salvataggio del nuovo file con i nomi aggiornati, preservando il formato
+df.to_csv('modified_sequences.csv', index=False, quoting=1)
 
-print(f"File salvato con i nomi delle sequenze modificati: {output_file_path}")
+print("File salvato con i nomi delle sequenze modificati: modified_sequences.csv")
+
 
