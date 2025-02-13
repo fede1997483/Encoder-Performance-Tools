@@ -1,72 +1,62 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import os
-import sys
 
-def generate_execution_time_histograms(csv_file):
-    try:
-        data = pd.read_csv(csv_file)
-    except Exception as e:
-        print(f"Errore durante il caricamento del file CSV: {e}")
-        return
+# Caricare il file CSV
+df = pd.read_csv("user_times.csv")
 
-    required_columns = {'seq_name', 'codec', 'preset', 'user'}
-    if not required_columns.issubset(data.columns):
-        print(f"Il file CSV manca di una o più colonne richieste: {required_columns}")
-        return
+# Definizione dei colori specifici per ogni codec
+codec_colors = {
+    "libx265": "blue",
+    "libaom-av1": "darkorange",
+    "libvvenc_1.12.1": "red",
+    "libsvtav1": "green"
+}
 
-    # Filtra i preset 0 e 1
-    data = data[~data['preset'].isin([0, 1])]
+# Creare la cartella per salvare i grafici
+output_dir = "execution_time_graphs"
+os.makedirs(output_dir, exist_ok=True)
 
-    base_output_dir = os.path.join(os.getcwd(), "execution_time_histograms")
-    os.makedirs(base_output_dir, exist_ok=True)
+# Lista univoca delle sequenze video
+unique_sequences = df["seq_name"].unique()
 
-    sequences = data['seq_name'].unique()
+# Creazione dei grafici
+for seq in unique_sequences:
+    subset = df[df["seq_name"] == seq]
+    
+    fig, ax = plt.subplots(figsize=(10, 6))
+    
+    # Creazione delle colonne con altezza basata sul tempo di codifica
+    for _, row in subset.iterrows():
+        ax.bar(row["codec"], row["user"], color=codec_colors.get(row["codec"], "gray"), alpha=0.8)
+    
+    # Impostazioni del grafico
+    ax.set_ylabel("Tempo di codifica (ms)")
+    ax.set_xlabel("Codec")
+    ax.set_title(f"Sequenza: {seq}", fontsize=12)
+    
+    # Aggiunta delle etichette con il tempo di codifica e VMAF sopra le barre
+    max_user = subset["user"].max()
+    for i, row in enumerate(subset.itertuples()):
+        ax.text(row.codec, row.user + max_user * 0.05, f"{row.user:.2f} ms\nVMAF: {row.vmaf:.2f}",
+                ha='center', fontsize=10, bbox=dict(facecolor='white', alpha=0.7), fontweight='bold')
+    
+    # Aggiunta di margine superiore per dare spazio alle etichette
+    ax.set_ylim(0, max_user * 1.3)
+    
+    # Creazione della legenda posizionata esternamente con spazio ridotto
+    handles = [plt.Rectangle((0, 0), 1, 1, color=codec_colors[c]) for c in codec_colors]
+    fig.legend(handles, codec_colors.keys(), title="Codec", loc="center right", bbox_to_anchor=(1.08, 0.5))
+    
+    # Adattare layout per evitare sovrapposizioni
+    plt.tight_layout(rect=[0, 0, 0.9, 1])
+    
+    # Salvare il grafico nella cartella
+    output_path = os.path.join(output_dir, f"{seq.replace(' ', '_')}.png")
+    plt.savefig(output_path)
+    
+    # Chiudere il grafico per liberare memoria
+    plt.close(fig)
 
-    for seq in sequences:
-        subset = data[data['seq_name'] == seq]
-
-        avg_execution_time = subset.groupby(['codec', 'preset'])['user'].mean().reset_index()
-
-        if not avg_execution_time.empty:
-            plt.figure(figsize=(10, 6))
-
-            codecs = avg_execution_time['codec'].unique()
-            presets = sorted(avg_execution_time['preset'].unique())
-
-            bar_width = 0.2
-            positions = range(len(presets))
-
-            for idx, codec in enumerate(codecs):
-                codec_data = avg_execution_time[avg_execution_time['codec'] == codec]
-                times = [codec_data[codec_data['preset'] == p]['user'].values[0] if p in codec_data['preset'].values else None for p in presets]
-                bar_positions = [p + idx * bar_width for p in positions]
-                
-                bars = plt.bar(bar_positions, [t if t is not None else 0 for t in times], bar_width, label=codec)
-                
-                # Aggiunta delle etichette sopra ogni barra con il valore del preset solo se la barra non è zero
-                for bar, preset, time in zip(bars, presets, times):
-                    if time is not None and time > 0:
-                        plt.text(bar.get_x() + bar.get_width()/2, 0, preset, ha='center', va='bottom', fontsize=9)
-
-            plt.title(f"Average Execution Time - {seq}")
-            plt.xlabel("Preset")
-            plt.ylabel("Average Execution Time (s)")
-            plt.xticks([p + (bar_width * len(codecs)) / 2 for p in positions], presets)
-            plt.legend(title="Codec", fontsize='small')
-            plt.grid(axis='y', linestyle='--', alpha=0.7)
-
-            plot_file = os.path.join(base_output_dir, f"{seq}_execution_time_histogram.png")
-            plt.savefig(plot_file, bbox_inches='tight')
-            plt.close()
-
-    print(f"Gli istogrammi dei tempi di esecuzione medi sono stati salvati nella directory: {base_output_dir}")
-
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Utilizzo: python3 generate_execution_time_histograms.py <file_csv>")
-    else:
-        csv_file = sys.argv[1]
-        generate_execution_time_histograms(csv_file)
 
 

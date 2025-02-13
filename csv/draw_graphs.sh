@@ -9,6 +9,7 @@ rm ./merged_results.csv
 cd ..
 sh preset_to_number.sh merged_results.csv out.csv
 python3 graphs_preset.py out.csv
+#python3 graphs_user_time.py out.csv
 python3 graphs_user_time.py out.csv
 python3 bitrate_efficiency.py out.csv
 python3 bitrate_efficiency_UHD.py out.csv

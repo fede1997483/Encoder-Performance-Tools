@@ -94,10 +94,6 @@ cutting_orange_tuil_4k        93 libvvenc_1.12.1          54.367000
       water_netflix_4k        93      libaom-av1          -8.724998
       water_netflix_4k        94      libaom-av1          -9.105298
       water_netflix_4k        95      libaom-av1          -9.870002
-      water_netflix_4k        96      libaom-av1         -17.117525
-      water_netflix_4k        97      libaom-av1         -26.510632
-      water_netflix_4k        98      libaom-av1         -25.528170
-      water_netflix_4k        99      libaom-av1         -23.881664
       water_netflix_4k        71       libsvtav1          15.593695
       water_netflix_4k        80       libsvtav1          10.632518
       water_netflix_4k        86       libsvtav1           8.295752
@@ -135,12 +131,12 @@ cutting_orange_tuil_4k libvvenc_1.12.1          47.050401
     vegetables_tuil_4k      libaom-av1          60.061796
     vegetables_tuil_4k       libsvtav1          59.752948
     vegetables_tuil_4k libvvenc_1.12.1          58.933079
-      water_netflix_4k      libaom-av1         -12.829332
+      water_netflix_4k      libaom-av1          -6.869237
       water_netflix_4k       libsvtav1           8.766027
       water_netflix_4k libvvenc_1.12.1           3.457629
 
 Risparmio medio di bitrate complessivo per ogni codec:
           codec  bitrate_savings_%
-     libaom-av1          33.971365
+     libaom-av1          40.158485
       libsvtav1          35.058681
 libvvenc_1.12.1          34.839702
