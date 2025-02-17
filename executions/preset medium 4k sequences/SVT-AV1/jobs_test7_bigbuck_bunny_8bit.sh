@@ -1,0 +1,15 @@
+#!/bin/bash
+
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="1100"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="1200"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="1300"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="1400"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="1500"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="2000"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="3000"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="4000"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="5000"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="6000"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="7000"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="8000"
+sbatch script_10GB.sbatch ./seq_4k/bigbuck_bunny_8bit.y4m ./configs/test7_config_AV1-SVT.cfg bitrate="10000"
