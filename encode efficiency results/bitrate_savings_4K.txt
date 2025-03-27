@@ -1,0 +1,142 @@
+Dettagli risparmio bitrate per intervallo di VMAF:
+              seq_name  vmaf_bin           codec  bitrate_savings_%
+      Sparks_cut_13_4k        82      libaom-av1          61.599869
+      Sparks_cut_13_4k        84      libaom-av1          58.470485
+      Sparks_cut_13_4k        85      libaom-av1          55.901570
+      Sparks_cut_13_4k        76       libsvtav1          51.508408
+      Sparks_cut_13_4k        79       libsvtav1          42.571380
+      Sparks_cut_13_4k        84       libsvtav1          52.535234
+      Sparks_cut_13_4k        72 libvvenc_1.12.1          42.087803
+      Sparks_cut_13_4k        83 libvvenc_1.12.1          49.170329
+      Sparks_cut_13_4k        84 libvvenc_1.12.1          43.570107
+      Sparks_cut_13_4k        85 libvvenc_1.12.1          44.688706
+      Sparks_cut_15_4K        56      libaom-av1          33.523731
+      Sparks_cut_15_4K        63      libaom-av1          35.541070
+      Sparks_cut_15_4K        68      libaom-av1          36.214648
+      Sparks_cut_15_4K        72      libaom-av1          35.420539
+      Sparks_cut_15_4K        78      libaom-av1          32.996021
+      Sparks_cut_15_4K        80      libaom-av1          33.918686
+      Sparks_cut_15_4K        84      libaom-av1          31.495840
+      Sparks_cut_15_4K        85      libaom-av1          32.257995
+      Sparks_cut_15_4K        86      libaom-av1          30.231220
+      Sparks_cut_15_4K        88      libaom-av1          33.548465
+      Sparks_cut_15_4K        89      libaom-av1          27.775941
+      Sparks_cut_15_4K        68       libsvtav1          30.438208
+      Sparks_cut_15_4K        72       libsvtav1          31.581153
+      Sparks_cut_15_4K        79       libsvtav1          27.562220
+      Sparks_cut_15_4K        81       libsvtav1          28.635150
+      Sparks_cut_15_4K        83       libsvtav1          26.460740
+      Sparks_cut_15_4K        84       libsvtav1          24.577782
+      Sparks_cut_15_4K        86       libsvtav1          28.477493
+      Sparks_cut_15_4K        87       libsvtav1          26.813880
+      Sparks_cut_15_4K        88       libsvtav1          27.791740
+      Sparks_cut_15_4K        89       libsvtav1          26.247664
+      Sparks_cut_15_4K        68 libvvenc_1.12.1          40.144718
+      Sparks_cut_15_4K        76 libvvenc_1.12.1          38.023724
+      Sparks_cut_15_4K        78 libvvenc_1.12.1          36.268251
+      Sparks_cut_15_4K        79 libvvenc_1.12.1          34.722366
+      Sparks_cut_15_4K        81 libvvenc_1.12.1          36.543798
+      Sparks_cut_15_4K        84 libvvenc_1.12.1          34.065518
+      Sparks_cut_15_4K        85 libvvenc_1.12.1          35.487145
+      Sparks_cut_15_4K        86 libvvenc_1.12.1          34.356970
+      Sparks_cut_15_4K        87 libvvenc_1.12.1          30.630786
+      Sparks_cut_15_4K        88 libvvenc_1.12.1          31.955177
+      Sparks_cut_15_4K        89 libvvenc_1.12.1          28.243433
+ bigbuck_bunny_8bit_4k        86      libaom-av1          52.201466
+ bigbuck_bunny_8bit_4k        89      libaom-av1          55.196882
+ bigbuck_bunny_8bit_4k        92      libaom-av1          57.582532
+ bigbuck_bunny_8bit_4k        94      libaom-av1          52.753148
+ bigbuck_bunny_8bit_4k        86       libsvtav1          53.090184
+ bigbuck_bunny_8bit_4k        92       libsvtav1          47.161215
+ bigbuck_bunny_8bit_4k        94       libsvtav1          47.306238
+ bigbuck_bunny_8bit_4k        86 libvvenc_1.12.1          47.946534
+ bigbuck_bunny_8bit_4k        89 libvvenc_1.12.1          44.733197
+ bigbuck_bunny_8bit_4k        92 libvvenc_1.12.1          45.129621
+ bigbuck_bunny_8bit_4k        94 libvvenc_1.12.1          45.605034
+cutting_orange_tuil_4k        68      libaom-av1          71.713382
+cutting_orange_tuil_4k        77      libaom-av1          66.983758
+cutting_orange_tuil_4k        87      libaom-av1          66.314635
+cutting_orange_tuil_4k        89      libaom-av1          69.099489
+cutting_orange_tuil_4k        90      libaom-av1          71.033648
+cutting_orange_tuil_4k        91      libaom-av1          63.780987
+cutting_orange_tuil_4k        93      libaom-av1          68.083620
+cutting_orange_tuil_4k        68       libsvtav1          65.495283
+cutting_orange_tuil_4k        83       libsvtav1          59.860573
+cutting_orange_tuil_4k        90       libsvtav1          56.792275
+cutting_orange_tuil_4k        91       libsvtav1          55.288675
+cutting_orange_tuil_4k        92       libsvtav1          51.047852
+cutting_orange_tuil_4k        93       libsvtav1          51.101241
+cutting_orange_tuil_4k        77 libvvenc_1.12.1          45.491661
+cutting_orange_tuil_4k        78 libvvenc_1.12.1          43.084848
+cutting_orange_tuil_4k        83 libvvenc_1.12.1          46.521449
+cutting_orange_tuil_4k        90 libvvenc_1.12.1          45.348476
+cutting_orange_tuil_4k        92 libvvenc_1.12.1          47.488974
+cutting_orange_tuil_4k        93 libvvenc_1.12.1          54.367000
+    vegetables_tuil_4k        88      libaom-av1          63.896469
+    vegetables_tuil_4k        91      libaom-av1          60.994213
+    vegetables_tuil_4k        92      libaom-av1          62.695460
+    vegetables_tuil_4k        93      libaom-av1          56.916570
+    vegetables_tuil_4k        94      libaom-av1          55.806266
+    vegetables_tuil_4k        79       libsvtav1          72.492527
+    vegetables_tuil_4k        83       libsvtav1          68.003957
+    vegetables_tuil_4k        88       libsvtav1          63.592953
+    vegetables_tuil_4k        92       libsvtav1          62.038546
+    vegetables_tuil_4k        93       libsvtav1          56.372358
+    vegetables_tuil_4k        94       libsvtav1          36.017346
+    vegetables_tuil_4k        88 libvvenc_1.12.1          62.360600
+    vegetables_tuil_4k        91 libvvenc_1.12.1          59.576073
+    vegetables_tuil_4k        92 libvvenc_1.12.1          53.492450
+    vegetables_tuil_4k        94 libvvenc_1.12.1          60.303194
+      water_netflix_4k        86      libaom-av1          -1.550829
+      water_netflix_4k        90      libaom-av1          -4.665011
+      water_netflix_4k        91      libaom-av1          -6.092507
+      water_netflix_4k        92      libaom-av1          -8.076014
+      water_netflix_4k        93      libaom-av1          -8.724998
+      water_netflix_4k        94      libaom-av1          -9.105298
+      water_netflix_4k        95      libaom-av1          -9.870002
+      water_netflix_4k        71       libsvtav1          15.593695
+      water_netflix_4k        80       libsvtav1          10.632518
+      water_netflix_4k        86       libsvtav1           8.295752
+      water_netflix_4k        88       libsvtav1           7.703194
+      water_netflix_4k        90       libsvtav1           7.233995
+      water_netflix_4k        92       libsvtav1          14.210220
+      water_netflix_4k        93       libsvtav1          13.069172
+      water_netflix_4k        94       libsvtav1          12.350791
+      water_netflix_4k        95       libsvtav1          11.723716
+      water_netflix_4k        96       libsvtav1          -2.374900
+      water_netflix_4k        97       libsvtav1          -2.011856
+      water_netflix_4k        71 libvvenc_1.12.1           9.845571
+      water_netflix_4k        86 libvvenc_1.12.1           4.201816
+      water_netflix_4k        88 libvvenc_1.12.1           3.631914
+      water_netflix_4k        91 libvvenc_1.12.1           5.705842
+      water_netflix_4k        92 libvvenc_1.12.1           0.316890
+      water_netflix_4k        93 libvvenc_1.12.1           1.772959
+      water_netflix_4k        94 libvvenc_1.12.1           3.127487
+      water_netflix_4k        95 libvvenc_1.12.1          -0.941442
+
+Risparmio medio di bitrate per sequenza e codec:
+              seq_name           codec  bitrate_savings_%
+      Sparks_cut_13_4k      libaom-av1          58.657308
+      Sparks_cut_13_4k       libsvtav1          48.871674
+      Sparks_cut_13_4k libvvenc_1.12.1          44.879236
+      Sparks_cut_15_4K      libaom-av1          32.993105
+      Sparks_cut_15_4K       libsvtav1          27.858603
+      Sparks_cut_15_4K libvvenc_1.12.1          34.585626
+ bigbuck_bunny_8bit_4k      libaom-av1          54.433507
+ bigbuck_bunny_8bit_4k       libsvtav1          49.185879
+ bigbuck_bunny_8bit_4k libvvenc_1.12.1          45.853596
+cutting_orange_tuil_4k      libaom-av1          68.144217
+cutting_orange_tuil_4k       libsvtav1          56.597650
+cutting_orange_tuil_4k libvvenc_1.12.1          47.050401
+    vegetables_tuil_4k      libaom-av1          60.061796
+    vegetables_tuil_4k       libsvtav1          59.752948
+    vegetables_tuil_4k libvvenc_1.12.1          58.933079
+      water_netflix_4k      libaom-av1          -6.869237
+      water_netflix_4k       libsvtav1           8.766027
+      water_netflix_4k libvvenc_1.12.1           3.457629
+
+Risparmio medio di bitrate complessivo per ogni codec:
+          codec  bitrate_savings_%
+     libaom-av1          40.158485
+      libsvtav1          35.058681
+libvvenc_1.12.1          34.839702
