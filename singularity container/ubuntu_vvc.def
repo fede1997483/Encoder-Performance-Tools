@@ -1,0 +1,47 @@
+Bootstrap: docker
+From: ubuntu:24.04
+
+%post
+    apt-get update
+    apt-get install -y cmake g++ nasm pkg-config git libxml2-dev libx265-dev libaom-dev bc jq
+    apt-get install -y python3-full python3-matplotlib
+    apt-get install -y time
+
+    git clone https://github.com/fraunhoferhhi/vvenc.git
+    cd vvenc
+    git checkout v1.12.1
+    mkdir build && cd build
+    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr/local ..
+    make
+    make install
+    cd ../..
+
+    git clone https://gitlab.com/AOMediaCodec/SVT-AV1.git
+    cd SVT-AV1
+    git checkout v2.3.0
+    mkdir build && cd build
+    cmake .. -G"Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+    make -j$(nproc)
+    make install
+    ldconfig
+    cd ../../
+
+    git clone https://git.ffmpeg.org/ffmpeg.git ffmpeg
+    cd ffmpeg
+    git checkout master
+    ./configure --enable-pthreads --enable-pic --enable-shared --enable-rpath --arch=amd64\
+     --enable-demuxer=dash --enable-libxml2 --enable-libvvenc --enable-gpl --enable-libx265 --enable-libaom \
+     --enable-libsvtav1 --enable-gpl --enable-nonfree
+    make -j$(nproc)
+    make install
+
+%environment
+    # Imposta l'ambiente virtuale nel PATH
+    export PATH="/usr/local/bin:/opt/vmaf_env/bin:/root/.local/bin:$PATH"
+
+%runscript
+    echo "VVC container"
+
+%labels
+    Author="Federico Baldassi"
+    Version="1.0"
